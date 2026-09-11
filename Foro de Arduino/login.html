@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Iniciar sesión | Arduino Forum</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    padding:20px;
+
+    font-family:Arial, sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e8fafa,
+            #f5f3ff
+        );
+}
+
+.login-box{
+    width:100%;
+    max-width:430px;
+
+    background:white;
+
+    padding:35px;
+
+    border-radius:22px;
+
+    box-shadow:
+        0 20px 50px
+        rgba(0,0,0,.10);
+}
+
+.logo{
+    text-align:center;
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    color:#00878f;
+
+    margin-bottom:10px;
+}
+
+.subtitulo{
+    text-align:center;
+
+    color:#667085;
+
+    margin-bottom:25px;
+}
+
+form{
+    display:grid;
+    gap:15px;
+}
+
+label{
+    font-weight:bold;
+
+    font-size:14px;
+
+    color:#374151;
+}
+
+input{
+    width:100%;
+
+    padding:14px;
+
+    border:
+        1px solid #d1d5db;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+    outline:none;
+}
+
+input:focus{
+    border-color:#00878f;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(0,135,143,.10);
+}
+
+button{
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#00878f;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+button:hover{
+    background:#006f75;
+}
+
+button:disabled{
+    opacity:.6;
+
+    cursor:not-allowed;
+}
+
+#mensaje{
+    text-align:center;
+
+    min-height:24px;
+
+    margin-top:5px;
+
+    line-height:1.5;
+}
+
+.error{
+    color:#dc2626;
+}
+
+.exito{
+    color:#00878f;
+}
+
+.links{
+    text-align:center;
+
+    margin-top:20px;
+
+    color:#667085;
+}
+
+.links a{
+    color:#00878f;
+
+    font-weight:bold;
+
+    text-decoration:none;
+}
+
+.links a:hover{
+    text-decoration:underline;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="login-box">
+
+
+<div class="logo">
+
+⚡ Arduino Forum
+
+</div>
+
+
+<p class="subtitulo">
+
+Iniciá sesión en tu cuenta
+
+</p>
+
+
+<form id="loginForm">
+
+
+<div>
+
+<label for="email">
+
+Correo electrónico
+
+</label>
+
+<input
+    id="email"
+    type="email"
+    autocomplete="email"
+    placeholder="correo@ejemplo.com"
+    required
+>
+
+</div>
+
+
+<div>
+
+<label for="password">
+
+Contraseña
+
+</label>
+
+<input
+    id="password"
+    type="password"
+    autocomplete="current-password"
+    placeholder="Tu contraseña"
+    required
+>
+
+</div>
+
+
+<button
+    id="btnLogin"
+    type="submit"
+>
+
+🔐 Iniciar sesión
+
+</button>
+
+
+<p id="mensaje"></p>
+
+
+</form>
+
+
+<div class="links">
+
+<p>
+
+¿No tenés cuenta?
+
+<a href="registro.html">
+
+Crear cuenta
+
+</a>
+
+</p>
+
+
+<br>
+
+
+<a href="index.html">
+
+← Volver al inicio
+
+</a>
+
+</div>
+
+
+</div>
+
+
+<!-- SUPABASE -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+/*
+=======================================================
+CONFIGURACIÓN SUPABASE
+=======================================================
+
+IMPORTANTE:
+
+Poné acá EXACTAMENTE los datos de:
+
+Supabase
+→ Project Settings
+→ API
+
+La URL tiene que ser la URL de TU proyecto.
+
+La clave tiene que ser la Publishable key.
+
+=======================================================
+*/
+
+
+const SUPABASE_URL =
+"https://krhrbydwcpeumxilkuhs.supabase.co";
+
+
+const SUPABASE_KEY =
+"sb_publishable_pod-dyUz9qxC7BtehFoAsw_2hhSCNYN";
+
+
+/*
+=======================================================
+CREAR CLIENTE
+=======================================================
+*/
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/*
+=======================================================
+ELEMENTOS
+=======================================================
+*/
+
+const form =
+document.getElementById(
+    "loginForm"
+);
+
+const mensaje =
+document.getElementById(
+    "mensaje"
+);
+
+const boton =
+document.getElementById(
+    "btnLogin"
+);
+
+
+/*
+=======================================================
+LOGIN
+=======================================================
+*/
+
+form.addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+
+        const email =
+        document
+            .getElementById("email")
+            .value
+            .trim()
+            .toLowerCase();
+
+
+        const password =
+        document
+            .getElementById("password")
+            .value;
+
+
+        mensaje.textContent =
+        "";
+
+
+        boton.disabled =
+        true;
+
+        boton.textContent =
+        "🔄 Iniciando sesión...";
+
+
+        /*
+        ===============================================
+        SUPABASE AUTH
+        ===============================================
+        */
+
+        const {
+            data,
+            error
+        } =
+        await supabaseClient.auth.signInWithPassword({
+
+            email:
+            email,
+
+            password:
+            password
+
+        });
+
+
+        /*
+        ===============================================
+        ERROR
+        ===============================================
+        */
+
+        if(error){
+
+            console.error(
+                "SUPABASE LOGIN ERROR:",
+                error
+            );
+
+
+            mensaje.textContent =
+            "❌ " + error.message;
+
+            mensaje.className =
+            "error";
+
+
+            boton.disabled =
+            false;
+
+            boton.textContent =
+            "🔐 Iniciar sesión";
+
+            return;
+
+        }
+
+
+        /*
+        ===============================================
+        LOGIN CORRECTO
+        ===============================================
+        */
+
+        if(data.session){
+
+            mensaje.textContent =
+            "✅ ¡Sesión iniciada!";
+
+            mensaje.className =
+            "exito";
+
+
+            /*
+            Esperamos un poquito para
+            asegurar que la sesión quede
+            guardada.
+            */
+
+            setTimeout(
+                function(){
+
+                    window.location.href =
+                    "foro.html";
+
+                },
+                500
+            );
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>
+

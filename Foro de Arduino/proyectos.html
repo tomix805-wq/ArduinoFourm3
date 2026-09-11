@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Proyectos | Arduino Forum</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f7fb;
+    color:#17202a;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+    background:white;
+    border-bottom:1px solid #e5e7eb;
+
+    padding:18px 6%;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.logo{
+    color:#00878f;
+    font-size:24px;
+    font-weight:bold;
+}
+
+nav{
+    display:flex;
+    gap:18px;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+nav a{
+    text-decoration:none;
+    color:#374151;
+    font-weight:bold;
+}
+
+nav a:hover{
+    color:#00878f;
+}
+
+.btn-salir{
+    border:0;
+    background:#dc2626;
+    color:white;
+
+    padding:9px 14px;
+
+    border-radius:9px;
+
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* =========================
+   CONTENEDOR
+========================= */
+
+.contenedor{
+    width:min(1150px,92%);
+    margin:40px auto;
+}
+
+.titulo{
+    text-align:center;
+    font-size:42px;
+    margin-bottom:10px;
+}
+
+.subtitulo{
+    text-align:center;
+    color:#6b7280;
+    margin-bottom:35px;
+}
+
+/* =========================
+   CREAR PROYECTO
+========================= */
+
+.panel{
+    background:white;
+
+    padding:30px;
+
+    border-radius:18px;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.05);
+
+    margin-bottom:30px;
+}
+
+.panel h2{
+    margin-bottom:20px;
+}
+
+.formulario{
+    display:grid;
+    gap:15px;
+}
+
+input,
+textarea,
+select{
+
+    width:100%;
+
+    padding:13px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+    font-family:inherit;
+
+    outline:none;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+    border-color:#00878f;
+}
+
+textarea{
+    min-height:140px;
+    resize:vertical;
+}
+
+.btn{
+    border:0;
+
+    background:#00878f;
+
+    color:white;
+
+    padding:13px 20px;
+
+    border-radius:10px;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.btn:hover{
+    background:#006f75;
+}
+
+.btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+/* =========================
+   BUSCADOR
+========================= */
+
+.buscador{
+    margin-bottom:25px;
+}
+
+#buscar{
+    width:100%;
+
+    padding:15px;
+
+    border:1px solid #d1d5db;
+
+    border-radius:12px;
+
+    font-size:16px;
+
+    outline:none;
+}
+
+#buscar:focus{
+    border-color:#00878f;
+}
+
+/* =========================
+   PROYECTOS
+========================= */
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fit,minmax(280px,1fr));
+
+    gap:20px;
+}
+
+.proyecto{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.05);
+
+    border:1px solid transparent;
+
+    transition:.2s;
+}
+
+.proyecto:hover{
+
+    transform:translateY(-4px);
+
+    border-color:#00878f;
+}
+
+.icono-proyecto{
+
+    width:60px;
+    height:60px;
+
+    display:flex;
+
+    justify-content:center;
+    align-items:center;
+
+    border-radius:15px;
+
+    background:#e7fbfc;
+
+    font-size:30px;
+
+    margin-bottom:15px;
+}
+
+.proyecto h3{
+
+    font-size:21px;
+
+    margin-bottom:10px;
+}
+
+.descripcion{
+
+    color:#5f6670;
+
+    line-height:1.5;
+
+    margin-bottom:18px;
+
+    white-space:pre-wrap;
+}
+
+.autor{
+
+    color:#00878f;
+
+    font-weight:bold;
+
+    font-size:14px;
+
+    margin-bottom:7px;
+}
+
+.categoria{
+
+    display:inline-block;
+
+    background:#eef2ff;
+
+    color:#4f46e5;
+
+    padding:6px 10px;
+
+    border-radius:20px;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+    margin-bottom:12px;
+}
+
+.fecha{
+
+    color:#9ca3af;
+
+    font-size:12px;
+}
+
+/* =========================
+   ESTADOS
+========================= */
+
+.estado{
+
+    text-align:center;
+
+    padding:30px;
+
+    color:#6b7280;
+
+    grid-column:1/-1;
+}
+
+.error{
+    color:#dc2626;
+}
+
+.exito{
+    color:#00878f;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+
+    background:#17202a;
+
+    color:white;
+
+    text-align:center;
+
+    padding:30px;
+
+    margin-top:60px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:700px){
+
+    header{
+
+        flex-direction:column;
+
+        gap:15px;
+
+    }
+
+    .titulo{
+
+        font-size:32px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+<div class="logo">
+⚡ Arduino Forum
+</div>
+
+<nav>
+
+<a href="index.html">
+Inicio
+</a>
+
+<a href="foro.html">
+Foro
+</a>
+
+<a href="proyectos.html">
+Proyectos
+</a>
+
+<a href="usuarios.html">
+Usuarios
+</a>
+
+<a href="perfil.html">
+Mi perfil
+</a>
+
+<button
+id="btnSalir"
+class="btn-salir">
+
+Salir
+
+</button>
+
+</nav>
+
+</header>
+
+
+<!-- =========================
+     CONTENIDO
+========================= -->
+
+<main class="contenedor">
+
+
+<h1 class="titulo">
+🚀 Proyectos
+</h1>
+
+
+<p class="subtitulo">
+Descubre proyectos creados por la comunidad
+de Arduino Forum.
+</p>
+
+
+<!-- =========================
+     CREAR PROYECTO
+========================= -->
+
+<section class="panel">
+
+<h2>
+➕ Compartir un proyecto
+</h2>
+
+
+<form
+id="formProyecto"
+class="formulario">
+
+
+<input
+id="tituloProyecto"
+type="text"
+maxlength="150"
+placeholder="Nombre del proyecto"
+required
+>
+
+
+<select
+id="categoriaProyecto"
+required>
+
+<option value="">
+Selecciona una categoría
+</option>
+
+</select>
+
+
+<textarea
+id="descripcionProyecto"
+maxlength="5000"
+placeholder="Describe tu proyecto, componentes, funcionamiento, etc."
+required></textarea>
+
+
+<button
+id="btnCrear"
+class="btn"
+type="submit">
+
+🚀 Publicar proyecto
+
+</button>
+
+
+</form>
+
+
+<p
+id="mensaje"
+class="estado">
+</p>
+
+</section>
+
+
+<!-- =========================
+     BUSCAR
+========================= -->
+
+<section class="buscador">
+
+<input
+id="buscar"
+type="search"
+placeholder="🔎 Buscar proyectos..."
+autocomplete="off">
+
+</section>
+
+
+<!-- =========================
+     LISTA
+========================= -->
+
+<section>
+
+<div
+id="proyectos"
+class="grid">
+
+<div class="estado">
+
+Cargando proyectos...
+
+</div>
+
+</div>
+
+</section>
+
+
+</main>
+
+
+<footer>
+
+<p>
+© 2026 Arduino Forum
+</p>
+
+<p>
+Comunidad de Electrónica, Programación y Robótica
+</p>
+
+</footer>
+
+
+<!-- =========================
+     SUPABASE
+========================= -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+/* =================================
+   CONFIGURACIÓN SUPABASE
+================================= */
+
+const SUPABASE_URL =
+"https://krhrbydwcpeumxilkuhs.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_pod-dyUz9qxC7BtehFoAsw_2hhSCNYN";
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* =================================
+   VARIABLES
+================================= */
+
+let usuarioActual = null;
+
+let proyectos = [];
+
+let categorias = [];
+
+
+/* =================================
+   ELEMENTOS
+================================= */
+
+const contenedor =
+document.getElementById("proyectos");
+
+const buscador =
+document.getElementById("buscar");
+
+const selectCategoria =
+document.getElementById("categoriaProyecto");
+
+const formulario =
+document.getElementById("formProyecto");
+
+const mensaje =
+document.getElementById("mensaje");
+
+const btnCrear =
+document.getElementById("btnCrear");
+
+const btnSalir =
+document.getElementById("btnSalir");
+
+
+/* =================================
+   INICIAR
+================================= */
+
+async function iniciar(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient.auth.getSession();
+
+
+    if(error){
+
+        console.error(error);
+
+        window.location.href =
+        "login.html";
+
+        return;
+
+    }
+
+
+    if(!data.session){
+
+        window.location.href =
+        "login.html";
+
+        return;
+
+    }
+
+
+    usuarioActual =
+    data.session.user;
+
+
+    await cargarCategorias();
+
+    await cargarProyectos();
+
+}
+
+
+/* =================================
+   CATEGORÍAS
+================================= */
+
+async function cargarCategorias(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("categories")
+    .select("*")
+    .order("id");
+
+
+    if(error){
+
+        console.error(error);
+
+        return;
+
+    }
+
+
+    categorias =
+    data || [];
+
+
+    selectCategoria.innerHTML = `
+
+        <option value="">
+            Selecciona una categoría
+        </option>
+
+    `;
+
+
+    categorias.forEach(categoria => {
+
+        const option =
+        document.createElement("option");
+
+
+        option.value =
+        categoria.id;
+
+
+        option.textContent =
+        `${categoria.icon || "💬"} ${categoria.name}`;
+
+
+        selectCategoria.appendChild(option);
+
+    });
+
+}
+
+
+/* =================================
+   CARGAR PROYECTOS
+================================= */
+
+async function cargarProyectos(){
+
+    contenedor.innerHTML = `
+
+        <div class="estado">
+            Cargando proyectos...
+        </div>
+
+    `;
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("projects")
+    .select(`
+        id,
+        title,
+        description,
+        category_id,
+        created_at,
+        user_id,
+        profiles (
+            username
+        ),
+        categories (
+            name,
+            icon
+        )
+    `)
+    .order(
+        "created_at",
+        {
+            ascending:false
+        }
+    );
+
+
+    if(error){
+
+        console.error(error);
+
+        contenedor.innerHTML = `
+
+            <div class="estado error">
+
+                ❌ No se pudieron cargar
+                los proyectos.
+
+                <br><br>
+
+                ${escapeHTML(error.message)}
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    proyectos =
+    data || [];
+
+
+    mostrarProyectos(
+        proyectos
+    );
+
+}
+
+
+/* =================================
+   MOSTRAR PROYECTOS
+================================= */
+
+function mostrarProyectos(lista){
+
+    contenedor.innerHTML = "";
+
+
+    if(!lista.length){
+
+        contenedor.innerHTML = `
+
+            <div class="estado">
+
+                🚀 Todavía no hay proyectos.
+
+                <br>
+
+                ¡Sé el primero en publicar uno!
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    lista.forEach(proyecto => {
+
+        const div =
+        document.createElement("article");
+
+
+        div.className =
+        "proyecto";
+
+
+        const categoria =
+        proyecto.categories?.name ||
+        "Sin categoría";
+
+
+        const icono =
+        proyecto.categories?.icon ||
+        "🔧";
+
+
+        const autor =
+        proyecto.profiles?.username ||
+        "Usuario";
+
+
+        const fecha =
+        new Date(
+            proyecto.created_at
+        ).toLocaleString(
+            "es-AR"
+        );
+
+
+        div.innerHTML = `
+
+            <div class="icono-proyecto">
+
+                ${escapeHTML(icono)}
+
+            </div>
+
+
+            <span class="categoria">
+
+                ${escapeHTML(categoria)}
+
+            </span>
+
+
+            <h3>
+
+                ${escapeHTML(
+                    proyecto.title
+                )}
+
+            </h3>
+
+
+            <p class="descripcion">
+
+                ${escapeHTML(
+                    proyecto.description
+                )}
+
+            </p>
+
+
+            <div class="autor">
+
+                👤 ${escapeHTML(autor)}
+
+            </div>
+
+
+            <div class="fecha">
+
+                📅 ${fecha}
+
+            </div>
+
+        `;
+
+
+        contenedor.appendChild(div);
+
+    });
+
+}
+
+
+/* =================================
+   BUSCADOR
+================================= */
+
+buscador.addEventListener(
+"input",
+function(){
+
+    const texto =
+    buscador.value
+    .trim()
+    .toLowerCase();
+
+
+    if(!texto){
+
+        mostrarProyectos(
+            proyectos
+        );
+
+        return;
+
+    }
+
+
+    const resultados =
+    proyectos.filter(
+        proyecto => {
+
+            const titulo =
+            proyecto.title ||
+            "";
+
+            const descripcion =
+            proyecto.description ||
+            "";
+
+            const categoria =
+            proyecto.categories?.name ||
+            "";
+
+            const autor =
+            proyecto.profiles?.username ||
+            "";
+
+
+            return (
+
+                titulo
+                .toLowerCase()
+                .includes(texto)
+
+                ||
+
+                descripcion
+                .toLowerCase()
+                .includes(texto)
+
+                ||
+
+                categoria
+                .toLowerCase()
+                .includes(texto)
+
+                ||
+
+                autor
+                .toLowerCase()
+                .includes(texto)
+
+            );
+
+        }
+    );
+
+
+    mostrarProyectos(
+        resultados
+    );
+
+});
+
+
+/* =================================
+   CREAR PROYECTO
+================================= */
+
+formulario.addEventListener(
+"submit",
+async function(event){
+
+    event.preventDefault();
+
+
+    const titulo =
+    document
+    .getElementById(
+        "tituloProyecto"
+    )
+    .value
+    .trim();
+
+
+    const descripcion =
+    document
+    .getElementById(
+        "descripcionProyecto"
+    )
+    .value
+    .trim();
+
+
+    const categoriaId =
+    selectCategoria.value;
+
+
+    if(
+        !titulo ||
+        !descripcion ||
+        !categoriaId
+    ){
+
+        mensaje.textContent =
+        "❌ Completa todos los campos.";
+
+        mensaje.className =
+        "estado error";
+
+        return;
+
+    }
+
+
+    btnCrear.disabled =
+    true;
+
+
+    btnCrear.textContent =
+    "Publicando...";
+
+
+    mensaje.textContent =
+    "";
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+    .from("projects")
+    .insert({
+
+        user_id:
+        usuarioActual.id,
+
+        title:
+        titulo,
+
+        description:
+        descripcion,
+
+        category_id:
+        Number(categoriaId)
+
+    });
+
+
+    if(error){
+
+        console.error(error);
+
+        mensaje.textContent =
+        "❌ " + error.message;
+
+        mensaje.className =
+        "estado error";
+
+    }
+
+    else{
+
+        mensaje.textContent =
+        "✅ Proyecto publicado correctamente.";
+
+        mensaje.className =
+        "estado exito";
+
+
+        formulario.reset();
+
+
+        await cargarProyectos();
+
+    }
+
+
+    btnCrear.disabled =
+    false;
+
+
+    btnCrear.textContent =
+    "🚀 Publicar proyecto";
+
+});
+
+
+/* =================================
+   CERRAR SESIÓN
+================================= */
+
+btnSalir.addEventListener(
+"click",
+async function(){
+
+    btnSalir.disabled =
+    true;
+
+
+    const {
+        error
+    } =
+    await supabaseClient.auth.signOut();
+
+
+    if(error){
+
+        console.error(error);
+
+        btnSalir.disabled =
+        false;
+
+        return;
+
+    }
+
+
+    window.location.href =
+    "index.html";
+
+});
+
+
+/* =================================
+   ESCAPAR HTML
+================================= */
+
+function escapeHTML(valor){
+
+    const div =
+    document.createElement("div");
+
+    div.textContent =
+    valor ?? "";
+
+    return div.innerHTML;
+
+}
+
+
+/* =================================
+   DETECTAR SESIÓN
+================================= */
+
+supabaseClient.auth.onAuthStateChange(
+function(event,session){
+
+    if(
+        event === "SIGNED_OUT" ||
+        !session
+    ){
+
+        window.location.href =
+        "login.html";
+
+    }
+
+});
+
+
+/* =================================
+   ARRANCAR
+================================= */
+
+iniciar();
+
+</script>
+
+
+</body>
+
+</html>
+

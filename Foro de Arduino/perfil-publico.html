@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Perfil | Arduino Forum</title>
+
+<style>
+
+/* =====================================================
+   GENERAL
+===================================================== */
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eefafa,
+            #f4f0ff
+        );
+
+    min-height:100vh;
+
+    color:#17202a;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+header{
+
+    background:#00878f;
+
+    color:white;
+
+    padding:15px 30px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
+
+}
+
+.logo{
+
+    font-size:24px;
+
+    font-weight:bold;
+
+}
+
+nav{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:5px;
+
+    flex-wrap:wrap;
+
+}
+
+nav a,
+nav button{
+
+    color:white;
+
+    text-decoration:none;
+
+    background:transparent;
+
+    border:none;
+
+    padding:9px 12px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+}
+
+nav a:hover,
+nav button:hover{
+
+    background:
+        rgba(255,255,255,.15);
+
+}
+
+
+/* =====================================================
+   CONTENEDOR
+===================================================== */
+
+.container{
+
+    width:min(1000px,94%);
+
+    margin:40px auto;
+
+}
+
+
+/* =====================================================
+   PERFIL
+===================================================== */
+
+.perfil{
+
+    background:white;
+
+    border-radius:25px;
+
+    padding:35px;
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,.08);
+
+    text-align:center;
+
+}
+
+
+/* =====================================================
+   AVATAR
+===================================================== */
+
+.avatar{
+
+    width:130px;
+
+    height:130px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:
+        5px solid #00878f;
+
+    display:none;
+
+    margin:0 auto 15px;
+
+}
+
+.avatar-inicial{
+
+    width:130px;
+
+    height:130px;
+
+    border-radius:50%;
+
+    background:#00878f;
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin:0 auto 15px;
+
+    font-size:55px;
+
+    font-weight:bold;
+
+}
+
+
+/* =====================================================
+   NOMBRE
+===================================================== */
+
+#nombre{
+
+    font-size:32px;
+
+    color:#00878f;
+
+    margin-bottom:5px;
+
+}
+
+.username{
+
+    color:#667085;
+
+    margin-bottom:15px;
+
+}
+
+
+/* =====================================================
+   RANGO
+===================================================== */
+
+.rango{
+
+    display:inline-block;
+
+    padding:8px 18px;
+
+    border-radius:30px;
+
+    background:#eefafa;
+
+    color:#00878f;
+
+    font-weight:bold;
+
+    margin-bottom:25px;
+
+}
+
+
+/* =====================================================
+   BIO
+===================================================== */
+
+.bio{
+
+    max-width:650px;
+
+    margin:0 auto 25px;
+
+    color:#475467;
+
+    line-height:1.6;
+
+}
+
+
+/* =====================================================
+   ESTADÍSTICAS
+===================================================== */
+
+.estadisticas{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:15px;
+
+    margin-top:25px;
+
+}
+
+.stat{
+
+    background:#f7f9fa;
+
+    border-radius:16px;
+
+    padding:20px;
+
+}
+
+.stat-numero{
+
+    display:block;
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    color:#00878f;
+
+    margin-bottom:5px;
+
+}
+
+.stat-nombre{
+
+    color:#667085;
+
+    font-size:14px;
+
+}
+
+
+/* =====================================================
+   INFORMACIÓN
+===================================================== */
+
+.info{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:15px;
+
+    margin-top:25px;
+
+    text-align:left;
+
+}
+
+.info-box{
+
+    background:#f7f9fa;
+
+    padding:16px;
+
+    border-radius:13px;
+
+}
+
+.info-box strong{
+
+    display:block;
+
+    margin-bottom:5px;
+
+    color:#344054;
+
+}
+
+.info-box span{
+
+    color:#667085;
+
+}
+
+
+/* =====================================================
+   PUBLICACIONES
+===================================================== */
+
+.titulo{
+
+    margin:35px 0 15px;
+
+    color:#00878f;
+
+}
+
+.publicaciones{
+
+    display:grid;
+
+    gap:15px;
+
+}
+
+.publicacion{
+
+    background:white;
+
+    padding:22px;
+
+    border-radius:17px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.06);
+
+}
+
+.publicacion h3{
+
+    color:#00878f;
+
+    margin-bottom:10px;
+
+}
+
+.publicacion p{
+
+    color:#475467;
+
+    line-height:1.6;
+
+}
+
+.meta{
+
+    margin-top:12px;
+
+    color:#667085;
+
+    font-size:13px;
+
+}
+
+
+/* =====================================================
+   BOTÓN
+===================================================== */
+
+.btn{
+
+    display:inline-block;
+
+    margin-top:25px;
+
+    padding:12px 20px;
+
+    background:#00878f;
+
+    color:white;
+
+    text-decoration:none;
+
+    border-radius:10px;
+
+    font-weight:bold;
+
+}
+
+.btn:hover{
+
+    background:#006f75;
+
+}
+
+
+/* =====================================================
+   CARGANDO
+===================================================== */
+
+#cargando{
+
+    text-align:center;
+
+    padding:80px;
+
+    color:#667085;
+
+    font-size:18px;
+
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+#error{
+
+    text-align:center;
+
+    padding:60px;
+
+    color:#dc2626;
+
+    display:none;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:700px){
+
+    header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .estadisticas{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+    .info{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+@media(max-width:450px){
+
+    .estadisticas{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .perfil{
+
+        padding:25px 18px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+
+<div class="logo">
+
+⚡ Arduino Forum
+
+</div>
+
+
+<nav>
+
+<a href="index.html">
+Inicio
+</a>
+
+<a href="foro.html">
+💬 Foro
+</a>
+
+<a href="proyectos.html">
+🚀 Proyectos
+</a>
+
+<a href="publicaciones.html">
+📝 Publicaciones
+</a>
+
+<a href="usuarios.html">
+👥 Usuarios
+</a>
+
+<button onclick="cerrarSesion()">
+🚪 Salir
+</button>
+
+</nav>
+
+
+</header>
+
+
+<!-- =====================================================
+     CONTENIDO
+===================================================== -->
+
+<main class="container">
+
+
+<div id="cargando">
+
+⏳ Cargando perfil...
+
+</div>
+
+
+<div id="error">
+
+❌ No se pudo cargar el perfil.
+
+</div>
+
+
+<div id="contenido" style="display:none;">
+
+
+<!-- =================================================
+     PERFIL
+================================================== -->
+
+<section class="perfil">
+
+
+<div
+    id="avatarInicial"
+    class="avatar-inicial"
+>
+
+?
+
+</div>
+
+
+<img
+    id="avatar"
+    class="avatar"
+    alt="Foto de perfil"
+>
+
+
+<h1 id="nombre">
+
+Usuario
+
+</h1>
+
+
+<p
+    id="username"
+    class="username"
+>
+
+@usuario
+
+</p>
+
+
+<div
+    id="rango"
+    class="rango"
+>
+
+⭐ Principiante
+
+</div>
+
+
+<p
+    id="bio"
+    class="bio"
+>
+
+Sin biografía todavía.
+
+</p>
+
+
+<!-- ===============================================
+     ESTADÍSTICAS
+================================================ -->
+
+<div class="estadisticas">
+
+
+<div class="stat">
+
+<span
+    id="nivel"
+    class="stat-numero"
+>
+
+1
+
+</span>
+
+<span class="stat-nombre">
+
+🎯 Nivel
+
+</span>
+
+</div>
+
+
+<div class="stat">
+
+<span
+    id="puntos"
+    class="stat-numero"
+>
+
+0
+
+</span>
+
+<span class="stat-nombre">
+
+💎 Puntos
+
+</span>
+
+</div>
+
+
+<div class="stat">
+
+<span
+    id="cantidadPublicaciones"
+    class="stat-numero"
+>
+
+0
+
+</span>
+
+<span class="stat-nombre">
+
+📝 Publicaciones
+
+</span>
+
+</div>
+
+
+<div class="stat">
+
+<span
+    id="cantidadRespuestas"
+    class="stat-numero"
+>
+
+0
+
+</span>
+
+<span class="stat-nombre">
+
+💬 Respuestas
+
+</span>
+
+</div>
+
+
+</div>
+
+
+<!-- ===============================================
+     INFORMACIÓN
+================================================ -->
+
+<div class="info">
+
+
+<div class="info-box">
+
+<strong>
+👤 Nombre completo
+</strong>
+
+<span id="nombreCompleto">
+-
+</span>
+
+</div>
+
+
+<div class="info-box">
+
+<strong>
+🌎 País
+</strong>
+
+<span id="pais">
+-
+</span>
+
+</div>
+
+
+<div class="info-box">
+
+<strong>
+📅 Miembro desde
+</strong>
+
+<span id="fechaRegistro">
+-
+</span>
+
+</div>
+
+
+<div class="info-box">
+
+<strong>
+🏆 Rango
+</strong>
+
+<span id="rangoInfo">
+Principiante
+</span>
+
+</div>
+
+
+</div>
+
+
+<a
+    href="foro.html"
+    class="btn"
+>
+
+← Volver al foro
+
+</a>
+
+
+</section>
+
+
+<!-- =================================================
+     PUBLICACIONES DEL USUARIO
+================================================== -->
+
+<h2 class="titulo">
+
+📝 Publicaciones de este usuario
+
+</h2>
+
+
+<section
+    id="publicaciones"
+    class="publicaciones"
+>
+
+</section>
+
+
+</div>
+
+
+</main>
+
+
+<!-- =====================================================
+     SUPABASE
+===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+/* =====================================================
+   CONFIGURACIÓN
+===================================================== */
+
+const SUPABASE_URL =
+"https://krhrbydwcpeumxilkuhs.supabase.co";
+
+
+const SUPABASE_KEY =
+"TU_PUBLISHABLE_KEY";
+
+
+const supabaseClient =
+window.supabase.createClient(
+
+    SUPABASE_URL,
+
+    SUPABASE_KEY
+
+);
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let usuarioActual = null;
+
+let perfilActual = null;
+
+
+/* =====================================================
+   INICIAR
+===================================================== */
+
+async function iniciar(){
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .auth
+        .getSession();
+
+
+    if(error){
+
+        mostrarError();
+
+        return;
+
+    }
+
+
+    usuarioActual =
+    data.session?.user;
+
+
+    if(!usuarioActual){
+
+        window.location.href =
+        "login.html";
+
+        return;
+
+    }
+
+
+    await cargarPerfil();
+
+}
+
+
+/* =====================================================
+   CARGAR PERFIL
+===================================================== */
+
+async function cargarPerfil(){
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+
+        .from("profiles")
+
+        .select(
+            "*"
+        )
+
+        .eq(
+            "id",
+            usuarioActual.id
+        )
+
+        .maybeSingle();
+
+
+    if(error){
+
+        console.error(
+            "Error perfil:",
+            error
+        );
+
+        mostrarError();
+
+        return;
+
+    }
+
+
+    if(!data){
+
+        mostrarError();
+
+        return;
+
+    }
+
+
+    perfilActual =
+    data;
+
+
+    /* =============================================
+       NOMBRE
+    ============================================= */
+
+    const nombreMostrar =
+
+        data.nombre ||
+        data.username ||
+        "Usuario";
+
+
+    document
+        .getElementById("nombre")
+        .textContent =
+        nombreMostrar;
+
+
+    /* =============================================
+       USERNAME
+    ============================================= */
+
+    document
+        .getElementById("username")
+        .textContent =
+
+        "@" +
+        (
+            data.username ||
+            "usuario"
+        );
+
+
+    /* =============================================
+       RANGO
+    ============================================= */
+
+    const rango =
+        data.rango ||
+        "Principiante";
+
+
+    document
+        .getElementById("rango")
+        .textContent =
+        "⭐ " + rango;
+
+
+    document
+        .getElementById("rangoInfo")
+        .textContent =
+        rango;
+
+
+    /* =============================================
+       BIO
+    ============================================= */
+
+    document
+        .getElementById("bio")
+        .textContent =
+
+        data.bio ||
+        "Este usuario todavía no agregó una biografía.";
+
+
+    /* =============================================
+       NIVEL
+    ============================================= */
+
+    document
+        .getElementById("nivel")
+        .textContent =
+
+        data.nivel ||
+        1;
+
+
+    /* =============================================
+       PUNTOS
+    ============================================= */
+
+    document
+        .getElementById("puntos")
+        .textContent =
+
+        data.puntos ||
+        0;
+
+
+    /* =============================================
+       NOMBRE COMPLETO
+    ============================================= */
+
+    document
+        .getElementById("nombreCompleto")
+        .textContent =
+
+        `${data.nombre || ""} ${data.apellido || ""}`.trim()
+        ||
+        "No especificado";
+
+
+    /* =============================================
+       PAÍS
+    ============================================= */
+
+    document
+        .getElementById("pais")
+        .textContent =
+
+        data.pais ||
+        "No especificado";
+
+
+    /* =============================================
+       FECHA
+    ============================================= */
+
+    if(data.created_at){
+
+        const fecha =
+        new Date(
+            data.created_at
+        );
+
+
+        document
+            .getElementById(
+                "fechaRegistro"
+            )
+            .textContent =
+
+            fecha.toLocaleDateString(
+                "es-AR"
+            );
+
+    }
+
+
+    /* =============================================
+       AVATAR
+    ============================================= */
+
+    if(data.avatar_url){
+
+        const avatar =
+        document.getElementById(
+            "avatar"
+        );
+
+
+        avatar.src =
+        data.avatar_url;
+
+
+        avatar.style.display =
+        "block";
+
+
+        document
+            .getElementById(
+                "avatarInicial"
+            )
+            .style.display =
+            "none";
+
+    }
+    else{
+
+        const inicial =
+
+            (
+                data.username ||
+                data.nombre ||
+                "U"
+            )
+            .charAt(0)
+            .toUpperCase();
+
+
+        document
+            .getElementById(
+                "avatarInicial"
+            )
+            .textContent =
+            inicial;
+
+    }
+
+
+    /* =============================================
+       PUBLICACIONES
+    ============================================= */
+
+    await cargarPublicaciones();
+
+
+    /* =============================================
+       MOSTRAR
+    ============================================= */
+
+    document
+        .getElementById("cargando")
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById("contenido")
+        .style.display =
+        "block";
+
+}
+
+
+/* =====================================================
+   PUBLICACIONES
+===================================================== */
+
+async function cargarPublicaciones(){
+
+
+    const contenedor =
+    document.getElementById(
+        "publicaciones"
+    );
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+
+        .from("publicaciones")
+
+        .select(
+            "*"
+        )
+
+        .eq(
+            "user_id",
+            usuarioActual.id
+        )
+
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        );
+
+
+    if(error){
+
+        console.error(
+            "Error publicaciones:",
+            error
+        );
+
+        contenedor.innerHTML = `
+
+            <div class="publicacion">
+
+                <p>
+                    No se pudieron cargar
+                    las publicaciones.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    const cantidad =
+        data?.length || 0;
+
+
+    document
+        .getElementById(
+            "cantidadPublicaciones"
+        )
+        .textContent =
+        cantidad;
+
+
+    if(cantidad === 0){
+
+        contenedor.innerHTML = `
+
+            <div class="publicacion">
+
+                <h3>
+                    🚀 Todavía no hay publicaciones
+                </h3>
+
+                <p>
+                    Este usuario todavía
+                    no publicó nada.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    contenedor.innerHTML = "";
+
+
+    data.forEach(
+        publicacion => {
+
+
+            const articulo =
+            document.createElement(
+                "article"
+            );
+
+
+            articulo.className =
+            "publicacion";
+
+
+            const titulo =
+            escaparHTML(
+                publicacion.titulo ||
+                "Sin título"
+            );
+
+
+            const contenido =
+            escaparHTML(
+                publicacion.contenido ||
+                ""
+            );
+
+
+            const categoria =
+            escaparHTML(
+                publicacion.categoria ||
+                "General"
+            );
+
+
+            let fecha = "";
+
+
+            if(publicacion.created_at){
+
+                fecha =
+                new Date(
+                    publicacion.created_at
+                )
+                .toLocaleString(
+                    "es-AR"
+                );
+
+            }
+
+
+            articulo.innerHTML = `
+
+                <h3>
+                    ${titulo}
+                </h3>
+
+                <p>
+                    ${contenido}
+                </p>
+
+                <div class="meta">
+
+                    📚 ${categoria}
+
+                    ${fecha
+                        ? " · 🕒 " + fecha
+                        : ""
+                    }
+
+                </div>
+
+            `;
+
+
+            contenedor.appendChild(
+                articulo
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   CERRAR SESIÓN
+===================================================== */
+
+async function cerrarSesion(){
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+        .auth
+        .signOut();
+
+
+    if(error){
+
+        console.error(error);
+
+        return;
+
+    }
+
+
+    window.location.href =
+    "login.html";
+
+}
+
+
+/* =====================================================
+   ERROR
+===================================================== */
+
+function mostrarError(){
+
+
+    document
+        .getElementById(
+            "cargando"
+        )
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById(
+            "error"
+        )
+        .style.display =
+        "block";
+
+}
+
+
+/* =====================================================
+   SEGURIDAD HTML
+===================================================== */
+
+function escaparHTML(
+    texto
+){
+
+    const div =
+    document.createElement(
+        "div"
+    );
+
+
+    div.textContent =
+    texto;
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   ARRANCAR
+===================================================== */
+
+iniciar();
+
+</script>
+
+
+</body>
+
+</html>
+```

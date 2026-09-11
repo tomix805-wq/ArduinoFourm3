@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mi perfil | Arduino Forum</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f7fb;
+    color:#17202a;
+}
+
+header{
+    background:white;
+    padding:18px 6%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-bottom:1px solid #e5e7eb;
+    position:sticky;
+    top:0;
+    z-index:10;
+}
+
+.logo{
+    color:#00878f;
+    font-size:24px;
+    font-weight:bold;
+}
+
+nav{
+    display:flex;
+    gap:18px;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+nav a{
+    text-decoration:none;
+    color:#374151;
+    font-weight:bold;
+}
+
+nav a:hover{
+    color:#00878f;
+}
+
+.btn-salir{
+    border:0;
+    background:#dc2626;
+    color:white;
+    padding:9px 14px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.contenedor{
+    width:min(1000px,92%);
+    margin:40px auto;
+}
+
+.perfil-principal{
+    background:white;
+    border-radius:22px;
+    padding:35px;
+    box-shadow:0 10px 30px rgba(0,0,0,.06);
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.avatar{
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    margin:auto;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#e7fbfc;
+    color:#00878f;
+    font-size:60px;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+#nombrePerfil{
+    font-size:30px;
+    margin-bottom:8px;
+}
+
+.rango{
+    display:inline-block;
+    background:#e7fbfc;
+    color:#00878f;
+    padding:7px 14px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.bio{
+    color:#6b7280;
+    margin:20px auto;
+    max-width:600px;
+    line-height:1.6;
+}
+
+.estadisticas{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-top:25px;
+}
+
+.estadistica{
+    background:#f7fafb;
+    padding:20px;
+    border-radius:14px;
+}
+
+.estadistica strong{
+    display:block;
+    font-size:28px;
+    color:#00878f;
+}
+
+.estadistica span{
+    color:#6b7280;
+}
+
+.panel{
+    background:white;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 8px 25px rgba(0,0,0,.05);
+    margin-bottom:25px;
+}
+
+.panel h2{
+    margin-bottom:20px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+input,
+textarea{
+    width:100%;
+    padding:13px;
+    border:1px solid #d1d5db;
+    border-radius:10px;
+    font-size:15px;
+    margin-bottom:18px;
+    outline:none;
+    font-family:inherit;
+}
+
+textarea{
+    min-height:120px;
+    resize:vertical;
+}
+
+input:focus,
+textarea:focus{
+    border-color:#00878f;
+}
+
+button.guardar{
+    border:0;
+    background:#00878f;
+    color:white;
+    padding:13px 22px;
+    border-radius:10px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button.guardar:hover{
+    background:#006f75;
+}
+
+.publicacion{
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    padding:18px;
+    margin-bottom:12px;
+}
+
+.publicacion h3{
+    margin-bottom:8px;
+}
+
+.publicacion p{
+    color:#6b7280;
+}
+
+.estado{
+    text-align:center;
+    padding:20px;
+    color:#6b7280;
+}
+
+.error{
+    color:#dc2626;
+}
+
+.exito{
+    color:#00878f;
+}
+
+footer{
+    background:#17202a;
+    color:white;
+    text-align:center;
+    padding:30px;
+    margin-top:50px;
+}
+
+@media(max-width:700px){
+
+    header{
+        flex-direction:column;
+        gap:15px;
+    }
+
+    .estadisticas{
+        grid-template-columns:1fr;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+⚡ Arduino Forum
+</div>
+
+<nav>
+
+<a href="index.html">
+Inicio
+</a>
+
+<a href="foro.html">
+Foro
+</a>
+
+<a href="proyectos.html">
+Proyectos
+</a>
+
+<a href="perfil.html">
+Mi perfil
+</a>
+
+<button
+id="btnSalir"
+class="btn-salir">
+
+Salir
+
+</button>
+
+</nav>
+
+</header>
+
+
+<main class="contenedor">
+
+
+<!-- PERFIL -->
+
+<section class="perfil-principal">
+
+<div
+id="avatar"
+class="avatar">
+
+👤
+
+</div>
+
+
+<h1 id="nombrePerfil">
+Cargando...
+</h1>
+
+
+<span
+id="rangoPerfil"
+class="rango">
+
+Usuario
+
+</span>
+
+
+<p
+id="bioPerfil"
+class="bio">
+
+Cargando biografía...
+
+</p>
+
+
+<div class="estadisticas">
+
+<div class="estadistica">
+
+<strong id="cantidadPublicaciones">
+0
+</strong>
+
+<span>
+Publicaciones
+</span>
+
+</div>
+
+
+<div class="estadistica">
+
+<strong id="cantidadMensajes">
+0
+</strong>
+
+<span>
+Mensajes
+</span>
+
+</div>
+
+
+<div class="estadistica">
+
+<strong id="cantidadDias">
+0
+</strong>
+
+<span>
+Días en el foro
+</span>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- EDITAR PERFIL -->
+
+<section class="panel">
+
+<h2>
+✏️ Editar perfil
+</h2>
+
+
+<label>
+Nombre de usuario
+</label>
+
+<input
+id="nombre"
+type="text"
+maxlength="30"
+placeholder="Tu nombre">
+
+
+<label>
+Biografía
+</label>
+
+<textarea
+id="bio"
+maxlength="500"
+placeholder="Cuéntale algo a la comunidad..."></textarea>
+
+
+<button
+id="btnGuardar"
+class="guardar">
+
+💾 Guardar cambios
+
+</button>
+
+
+<p
+id="mensaje"
+class="estado">
+</p>
+
+</section>
+
+
+<!-- PUBLICACIONES -->
+
+<section class="panel">
+
+<h2>
+📝 Mis publicaciones
+</h2>
+
+
+<div id="misPublicaciones">
+
+<div class="estado">
+Cargando publicaciones...
+</div>
+
+</div>
+
+</section>
+
+
+</main>
+
+
+<footer>
+
+<p>
+© 2026 Arduino Forum
+</p>
+
+<p>
+Comunidad de Electrónica, Programación y Robótica
+</p>
+
+</footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+
+/* =====================================
+   SUPABASE
+===================================== */
+
+
+const SUPABASE_URL =
+"https://krhrbydwcpeumxilkuhs.supabase.co";
+
+
+const SUPABASE_KEY =
+"sb_publishable_pod-dyUz9qxC7BtehFoAsw_2hhSCNYN";
+
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* =====================================
+   VARIABLES
+===================================== */
+
+
+let usuarioActual=null;
+
+
+/* =====================================
+   ELEMENTOS
+===================================== */
+
+
+const nombrePerfil =
+document.getElementById("nombrePerfil");
+
+const rangoPerfil =
+document.getElementById("rangoPerfil");
+
+const bioPerfil =
+document.getElementById("bioPerfil");
+
+const avatar =
+document.getElementById("avatar");
+
+const nombreInput =
+document.getElementById("nombre");
+
+const bioInput =
+document.getElementById("bio");
+
+const cantidadPublicaciones =
+document.getElementById("cantidadPublicaciones");
+
+const cantidadMensajes =
+document.getElementById("cantidadMensajes");
+
+const cantidadDias =
+document.getElementById("cantidadDias");
+
+const misPublicaciones =
+document.getElementById("misPublicaciones");
+
+const mensaje =
+document.getElementById("mensaje");
+
+const btnGuardar =
+document.getElementById("btnGuardar");
+
+const btnSalir =
+document.getElementById("btnSalir");
+
+
+/* =====================================
+   INICIAR
+===================================== */
+
+
+async function iniciar(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient.auth.getSession();
+
+
+    if(error || !data.session){
+
+        window.location.href="login.html";
+
+        return;
+
+    }
+
+
+    usuarioActual =
+    data.session.user;
+
+
+    await cargarPerfil();
+
+    await cargarEstadisticas();
+
+    await cargarPublicaciones();
+
+}
+
+
+/* =====================================
+   PERFIL
+===================================== */
+
+
+async function cargarPerfil(){
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("profiles")
+    .select("*")
+    .eq("id",usuarioActual.id)
+    .single();
+
+
+    if(error){
+
+        console.error(error);
+
+        mensaje.textContent =
+        "❌ No se pudo cargar el perfil.";
+
+        mensaje.className =
+        "estado error";
+
+        return;
+
+    }
+
+
+    const username =
+    data.username || "Usuario";
+
+
+    const bio =
+    data.bio || "Todavía no has agregado una biografía.";
+
+
+    nombrePerfil.textContent =
+    username;
+
+
+    bioPerfil.textContent =
+    bio;
+
+
+    nombreInput.value =
+    username;
+
+
+    bioInput.value =
+    data.bio || "";
+
+
+    avatar.textContent =
+    obtenerInicial(username);
+
+
+    calcularRango();
+
+}
+
+
+/* =====================================
+   INICIAL
+===================================== */
+
+
+function obtenerInicial(nombre){
+
+    if(!nombre){
+        return "👤";
+    }
+
+    return nombre
+    .charAt(0)
+    .toUpperCase();
+
+}
+
+
+/* =====================================
+   ESTADÍSTICAS
+===================================== */
+
+
+async function cargarEstadisticas(){
+
+
+    /* PUBLICACIONES */
+
+    const publicaciones =
+    await supabaseClient
+    .from("posts")
+    .select("id",{
+        count:"exact",
+        head:true
+    })
+    .eq(
+        "user_id",
+        usuarioActual.id
+    );
+
+
+    cantidadPublicaciones.textContent =
+    publicaciones.count || 0;
+
+
+    /* MENSAJES */
+
+    const mensajes =
+    await supabaseClient
+    .from("messages")
+    .select("id",{
+        count:"exact",
+        head:true
+    })
+    .eq(
+        "user_id",
+        usuarioActual.id
+    );
+
+
+    cantidadMensajes.textContent =
+    mensajes.count || 0;
+
+
+    /* DÍAS */
+
+    const creado =
+    new Date(
+        usuarioActual.created_at
+    );
+
+
+    const ahora =
+    new Date();
+
+
+    const diferencia =
+    ahora - creado;
+
+
+    const dias =
+    Math.max(
+        1,
+        Math.floor(
+            diferencia /
+            (1000*60*60*24)
+        )
+    );
+
+
+    cantidadDias.textContent =
+    dias;
+
+
+}
+
+
+/* =====================================
+   RANGO
+===================================== */
+
+
+function calcularRango(){
+
+    const publicaciones =
+    Number(
+        cantidadPublicaciones.textContent
+    );
+
+
+    const mensajes =
+    Number(
+        cantidadMensajes.textContent
+    );
+
+
+    const total =
+    publicaciones + mensajes;
+
+
+    let rango =
+    "🌱 Principiante";
+
+
+    if(total >= 10){
+        rango="⚡ Colaborador";
+    }
+
+
+    if(total >= 30){
+        rango="🚀 Experto Arduino";
+    }
+
+
+    if(total >= 100){
+        rango="🏆 Maestro Arduino";
+    }
+
+
+    rangoPerfil.textContent =
+    rango;
+
+}
+
+
+/* =====================================
+   PUBLICACIONES
+===================================== */
+
+
+async function cargarPublicaciones(){
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+    .from("posts")
+    .select(`
+        id,
+        title,
+        content,
+        created_at,
+        categories (
+            name,
+            icon
+        )
+    `)
+    .eq(
+        "user_id",
+        usuarioActual.id
+    )
+    .order(
+        "created_at",
+        {
+            ascending:false
+        }
+    );
+
+
+    if(error){
+
+        console.error(error);
+
+        misPublicaciones.innerHTML =
+        `
+        <div class="estado error">
+        ❌ Error cargando publicaciones.
+        </div>
+        `;
+
+        return;
+
+    }
+
+
+    if(!data || data.length===0){
+
+        misPublicaciones.innerHTML =
+        `
+        <div class="estado">
+        Todavía no has creado publicaciones.
+        </div>
+        `;
+
+        return;
+
+    }
+
+
+    misPublicaciones.innerHTML="";
+
+
+    data.forEach(post=>{
+
+        const div =
+        document.createElement("div");
+
+
+        div.className =
+        "publicacion";
+
+
+        const categoria =
+        post.categories?.name ||
+        "Foro";
+
+
+        const icono =
+        post.categories?.icon ||
+        "💬";
+
+
+        const fecha =
+        new Date(
+            post.created_at
+        ).toLocaleString("es-AR");
+
+
+        div.innerHTML = `
+
+            <h3>
+            ${escapeHTML(post.title)}
+            </h3>
+
+            <p>
+            ${escapeHTML(icono)}
+            ${escapeHTML(categoria)}
+            · ${fecha}
+            </p>
+
+            <br>
+
+            <p>
+            ${escapeHTML(post.content)}
+            </p>
+
+        `;
+
+
+        misPublicaciones.appendChild(div);
+
+    });
+
+}
+
+
+/* =====================================
+   GUARDAR PERFIL
+===================================== */
+
+
+btnGuardar.addEventListener(
+"click",
+async function(){
+
+    const nuevoNombre =
+    nombreInput.value.trim();
+
+
+    const nuevaBio =
+    bioInput.value.trim();
+
+
+    if(nuevoNombre.length < 3){
+
+        mensaje.textContent =
+        "❌ El nombre debe tener al menos 3 caracteres.";
+
+        mensaje.className =
+        "estado error";
+
+        return;
+
+    }
+
+
+    btnGuardar.disabled=true;
+
+    btnGuardar.textContent =
+    "Guardando...";
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+    .from("profiles")
+    .update({
+
+        username:
+        nuevoNombre,
+
+        bio:
+        nuevaBio
+
+    })
+    .eq(
+        "id",
+        usuarioActual.id
+    );
+
+
+    if(error){
+
+        console.error(error);
+
+        mensaje.textContent =
+        "❌ "+error.message;
+
+        mensaje.className =
+        "estado error";
+
+    }
+
+    else{
+
+        nombrePerfil.textContent =
+        nuevoNombre;
+
+
+        bioPerfil.textContent =
+        nuevaBio ||
+        "Todavía no has agregado una biografía.";
+
+
+        avatar.textContent =
+        obtenerInicial(
+            nuevoNombre
+        );
+
+
+        mensaje.textContent =
+        "✅ Perfil actualizado.";
+
+
+        mensaje.className =
+        "estado exito";
+
+    }
+
+
+    btnGuardar.disabled=false;
+
+    btnGuardar.textContent =
+    "💾 Guardar cambios";
+
+});
+
+
+/* =====================================
+   CERRAR SESIÓN
+===================================== */
+
+
+btnSalir.addEventListener(
+"click",
+async function(){
+
+    await supabaseClient.auth.signOut();
+
+    window.location.href =
+    "index.html";
+
+});
+
+
+/* =====================================
+   SEGURIDAD
+===================================== */
+
+
+function escapeHTML(valor){
+
+    const div =
+    document.createElement("div");
+
+    div.textContent =
+    valor ?? "";
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================
+   SESIÓN
+===================================== */
+
+
+supabaseClient.auth.onAuthStateChange(
+function(event,session){
+
+    if(
+        event==="SIGNED_OUT" ||
+        !session
+    ){
+
+        window.location.href =
+        "login.html";
+
+    }
+
+});
+
+
+/* =====================================
+   ARRANCAR
+===================================== */
+
+
+iniciar();
+
+
+</script>
+
+</body>
+
+</html>
+

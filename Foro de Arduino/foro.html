@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Foro | Arduino Forum</title>
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:#f4f7f8;
+
+    color:#17202a;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+header{
+
+    background:#00878f;
+
+    color:white;
+
+    padding:15px 30px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:20px;
+
+    position:sticky;
+
+    top:0;
+
+    z-index:100;
+
+}
+
+.logo{
+
+    font-size:24px;
+
+    font-weight:bold;
+
+}
+
+nav{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:5px;
+
+    flex-wrap:wrap;
+
+}
+
+nav a,
+nav button{
+
+    color:white;
+
+    text-decoration:none;
+
+    background:transparent;
+
+    border:none;
+
+    padding:9px 12px;
+
+    border-radius:8px;
+
+    cursor:pointer;
+
+    font-size:14px;
+
+}
+
+nav a:hover,
+nav button:hover{
+
+    background:
+        rgba(255,255,255,.15);
+
+}
+
+
+/* =====================================================
+   CONTENEDOR
+===================================================== */
+
+.container{
+
+    width:min(1100px,94%);
+
+    margin:35px auto;
+
+}
+
+
+/* =====================================================
+   BIENVENIDA
+===================================================== */
+
+.hero{
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:22px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(0,0,0,.07);
+
+    margin-bottom:25px;
+
+}
+
+.hero h1{
+
+    color:#00878f;
+
+    margin-bottom:10px;
+
+}
+
+.hero p{
+
+    color:#667085;
+
+    line-height:1.6;
+
+}
+
+
+/* =====================================================
+   USUARIO
+===================================================== */
+
+.usuario{
+
+    margin-top:20px;
+
+    padding:15px;
+
+    background:#eefafa;
+
+    border-radius:15px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+}
+
+.avatar{
+
+    width:52px;
+
+    height:52px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    background:#00878f;
+
+}
+
+.avatar-inicial{
+
+    width:52px;
+
+    height:52px;
+
+    border-radius:50%;
+
+    background:#00878f;
+
+    color:white;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:22px;
+
+    font-weight:bold;
+
+}
+
+.usuario-info strong{
+
+    display:block;
+
+    margin-bottom:4px;
+
+}
+
+.usuario-info span{
+
+    color:#667085;
+
+    font-size:14px;
+
+}
+
+
+/* =====================================================
+   TÍTULOS
+===================================================== */
+
+.titulo{
+
+    color:#00878f;
+
+    margin:30px 0 15px;
+
+}
+
+
+/* =====================================================
+   CATEGORÍAS
+===================================================== */
+
+.categorias{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:15px;
+
+}
+
+.categoria{
+
+    background:white;
+
+    border-radius:17px;
+
+    padding:20px;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 7px 22px
+        rgba(0,0,0,.05);
+
+    transition:.2s;
+
+}
+
+.categoria:hover{
+
+    transform:translateY(-3px);
+
+}
+
+.categoria h3{
+
+    margin-bottom:8px;
+
+}
+
+.categoria p{
+
+    color:#667085;
+
+    font-size:14px;
+
+    line-height:1.5;
+
+}
+
+
+/* =====================================================
+   NUEVA PUBLICACIÓN
+===================================================== */
+
+.nueva-publicacion{
+
+    background:white;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.06);
+
+}
+
+.nueva-publicacion input,
+.nueva-publicacion textarea,
+.nueva-publicacion select{
+
+    width:100%;
+
+    padding:13px;
+
+    margin-bottom:12px;
+
+    border:
+        1px solid #d1d5db;
+
+    border-radius:10px;
+
+    font-family:inherit;
+
+    font-size:15px;
+
+    outline:none;
+
+}
+
+.nueva-publicacion textarea{
+
+    min-height:130px;
+
+    resize:vertical;
+
+}
+
+.nueva-publicacion input:focus,
+.nueva-publicacion textarea:focus,
+.nueva-publicacion select:focus{
+
+    border-color:#00878f;
+
+}
+
+
+/* =====================================================
+   BOTONES
+===================================================== */
+
+.btn{
+
+    background:#00878f;
+
+    color:white;
+
+    border:none;
+
+    padding:12px 20px;
+
+    border-radius:10px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+}
+
+.btn:hover{
+
+    background:#006f75;
+
+}
+
+.btn:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+}
+
+
+/* =====================================================
+   PUBLICACIONES
+===================================================== */
+
+.publicaciones{
+
+    display:grid;
+
+    gap:15px;
+
+}
+
+.publicacion{
+
+    background:white;
+
+    padding:22px;
+
+    border-radius:17px;
+
+    box-shadow:
+        0 7px 22px
+        rgba(0,0,0,.05);
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.publicacion:hover{
+
+    transform:translateY(-2px);
+
+}
+
+.publicacion h3{
+
+    color:#00878f;
+
+    margin-bottom:9px;
+
+}
+
+.publicacion-texto{
+
+    color:#374151;
+
+    line-height:1.6;
+
+    white-space:pre-wrap;
+
+    margin-bottom:14px;
+
+}
+
+.meta{
+
+    color:#667085;
+
+    font-size:13px;
+
+    display:flex;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+
+}
+
+
+/* =====================================================
+   MENSAJES
+===================================================== */
+
+#mensaje{
+
+    min-height:25px;
+
+    margin-top:10px;
+
+    font-weight:bold;
+
+}
+
+.error{
+
+    color:#dc2626;
+
+}
+
+.exito{
+
+    color:#00878f;
+
+}
+
+
+/* =====================================================
+   CARGANDO
+===================================================== */
+
+#cargando{
+
+    text-align:center;
+
+    padding:70px;
+
+    color:#667085;
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer{
+
+    text-align:center;
+
+    padding:30px;
+
+    color:#667085;
+
+    margin-top:40px;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:850px){
+
+    .categorias{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    header{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .categorias{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header>
+
+
+<div class="logo">
+
+⚡ Arduino Forum
+
+</div>
+
+
+<nav>
+
+<a href="index.html">
+Inicio
+</a>
+
+<a href="foro.html">
+💬 Foro
+</a>
+
+<a href="proyectos.html">
+🚀 Proyectos
+</a>
+
+<a href="publicaciones.html">
+📝 Publicaciones
+</a>
+
+<a href="usuarios.html">
+👥 Usuarios
+</a>
+
+<a href="perfil-publico.html">
+👤 Mi perfil
+</a>
+
+<button onclick="cerrarSesion()">
+🚪 Salir
+</button>
+
+</nav>
+
+
+</header>
+
+
+<!-- =====================================================
+     CONTENIDO
+===================================================== -->
+
+<main class="container">
+
+
+<div id="cargando">
+
+⏳ Cargando Arduino Forum...
+
+</div>
+
+
+<div id="contenido" style="display:none;">
+
+
+<!-- =================================================
+     BIENVENIDA
+================================================== -->
+
+<section class="hero">
+
+
+<h1>
+
+💬 Foro de Arduino Forum
+
+</h1>
+
+
+<p>
+
+Preguntá, compartí tus proyectos,
+ayudá a otros usuarios y aprendé
+sobre electrónica y programación.
+
+</p>
+
+
+<div class="usuario">
+
+
+<div
+    id="avatarInicial"
+    class="avatar-inicial"
+>
+?
+</div>
+
+
+<img
+    id="avatar"
+    class="avatar"
+    style="display:none;"
+>
+
+
+<div class="usuario-info">
+
+
+<strong id="nombreUsuario">
+
+Usuario
+
+</strong>
+
+
+<span id="datosUsuario">
+
+Principiante · Nivel 1 · 0 puntos
+
+</span>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+<!-- =================================================
+     CATEGORÍAS
+================================================== -->
+
+<h2 class="titulo">
+
+📚 Categorías
+
+</h2>
+
+
+<section class="categorias">
+
+
+<div
+    class="categoria"
+    onclick="seleccionarCategoria('Arduino')"
+>
+
+<h3>
+🔵 Arduino
+</h3>
+
+<p>
+Placas, sensores, LEDs,
+pantallas y programación.
+</p>
+
+</div>
+
+
+<div
+    class="categoria"
+    onclick="seleccionarCategoria('ESP32')"
+>
+
+<h3>
+🟣 ESP32
+</h3>
+
+<p>
+WiFi, Bluetooth, IoT
+y automatización.
+</p>
+
+</div>
+
+
+<div
+    class="categoria"
+    onclick="seleccionarCategoria('Robótica')"
+>
+
+<h3>
+🤖 Robótica
+</h3>
+
+<p>
+Robots, motores, servos
+y sensores.
+</p>
+
+</div>
+
+
+<div
+    class="categoria"
+    onclick="seleccionarCategoria('Raspberry Pi')"
+>
+
+<h3>
+🍓 Raspberry Pi
+</h3>
+
+<p>
+Linux, Python,
+servidores y proyectos.
+</p>
+
+</div>
+
+
+</section>
+
+
+<!-- =================================================
+     CREAR PUBLICACIÓN
+================================================== -->
+
+<h2 class="titulo">
+
+✏️ Crear publicación
+
+</h2>
+
+
+<section class="nueva-publicacion">
+
+
+<select id="categoria">
+
+<option value="Arduino">
+🔵 Arduino
+</option>
+
+<option value="ESP32">
+🟣 ESP32
+</option>
+
+<option value="Robótica">
+🤖 Robótica
+</option>
+
+<option value="Raspberry Pi">
+🍓 Raspberry Pi
+</option>
+
+</select>
+
+
+<input
+    id="tituloPublicacion"
+    type="text"
+    maxlength="150"
+    placeholder="Título de la publicación..."
+>
+
+
+<textarea
+    id="contenidoPublicacion"
+    maxlength="5000"
+    placeholder="Escribí tu pregunta, problema o proyecto..."
+></textarea>
+
+
+<button
+    id="btnPublicar"
+    class="btn"
+    onclick="crearPublicacion()"
+>
+
+🚀 Publicar
+
+</button>
+
+
+<div id="mensaje"></div>
+
+
+</section>
+
+
+<!-- =================================================
+     ÚLTIMAS PUBLICACIONES
+================================================== -->
+
+<h2 class="titulo">
+
+🔥 Últimas publicaciones
+
+</h2>
+
+
+<section
+    id="publicaciones"
+    class="publicaciones"
+>
+
+</section>
+
+
+</div>
+
+
+</main>
+
+
+<footer>
+
+© 2026 Arduino Forum | Comunidad Arduino en Español
+
+</footer>
+
+
+<!-- =====================================================
+     SUPABASE
+===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+/* =====================================================
+   SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+"https://krhrbydwcpeumxilkuhs.supabase.co";
+
+
+const SUPABASE_KEY =
+"sb_publishable_pod-dyUz9qxC7BtehFoAsw_2hhSCNYN";
+
+
+const supabaseClient =
+window.supabase.createClient(
+
+    SUPABASE_URL,
+
+    SUPABASE_KEY
+
+);
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let usuarioActual = null;
+
+let perfilActual = null;
+
+
+/* =====================================================
+   INICIAR FORO
+===================================================== */
+
+async function iniciarForo(){
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .auth
+        .getSession();
+
+
+    if(error){
+
+        console.error(error);
+
+        document
+            .getElementById("cargando")
+            .textContent =
+            "❌ Error comprobando la sesión.";
+
+        return;
+
+    }
+
+
+    usuarioActual =
+    data.session?.user;
+
+
+    /* =============================================
+       COMPROBAR LOGIN
+    ============================================= */
+
+    if(!usuarioActual){
+
+        window.location.href =
+        "login.html";
+
+        return;
+
+    }
+
+
+    /* =============================================
+       CARGAR PERFIL
+    ============================================= */
+
+    await cargarPerfil();
+
+
+    /* =============================================
+       CARGAR PUBLICACIONES
+    ============================================= */
+
+    await cargarPublicaciones();
+
+
+    /* =============================================
+       MOSTRAR FORO
+    ============================================= */
+
+    document
+        .getElementById("cargando")
+        .style.display =
+        "none";
+
+
+    document
+        .getElementById("contenido")
+        .style.display =
+        "block";
+
+}
+
+
+/* =====================================================
+   CARGAR PERFIL
+===================================================== */
+
+async function cargarPerfil(){
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("profiles")
+        .select(
+            "username,nombre,apellido,avatar_url,nivel,puntos,rango"
+        )
+        .eq(
+            "id",
+            usuarioActual.id
+        )
+        .maybeSingle();
+
+
+    if(error){
+
+        console.error(
+            "Error perfil:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    perfilActual =
+    data;
+
+
+    if(!data){
+
+        document
+            .getElementById("nombreUsuario")
+            .textContent =
+            usuarioActual.email;
+
+        return;
+
+    }
+
+
+    const nombre =
+        data.username ||
+        data.nombre ||
+        "Usuario";
+
+
+    document
+        .getElementById("nombreUsuario")
+        .textContent =
+        nombre;
+
+
+    document
+        .getElementById("datosUsuario")
+        .textContent =
+
+        `${data.rango || "Principiante"} · Nivel ${data.nivel || 1} · ${data.puntos || 0} puntos`;
+
+
+    /* =============================================
+       AVATAR
+    ============================================= */
+
+    if(data.avatar_url){
+
+        const avatar =
+        document.getElementById(
+            "avatar"
+        );
+
+
+        avatar.src =
+        data.avatar_url;
+
+
+        avatar.style.display =
+        "block";
+
+
+        document
+            .getElementById(
+                "avatarInicial"
+            )
+            .style.display =
+            "none";
+
+    }
+    else{
+
+        const inicial =
+
+            (
+                data.username ||
+                data.nombre ||
+                "U"
+            )
+            .charAt(0)
+            .toUpperCase();
+
+
+        document
+            .getElementById(
+                "avatarInicial"
+            )
+            .textContent =
+            inicial;
+
+    }
+
+}
+
+
+/* =====================================================
+   CARGAR PUBLICACIONES
+===================================================== */
+
+async function cargarPublicaciones(){
+
+
+    const contenedor =
+    document.getElementById(
+        "publicaciones"
+    );
+
+
+    contenedor.innerHTML =
+    "<p>⏳ Cargando publicaciones...</p>";
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("publicaciones")
+        .select("*")
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        )
+        .limit(30);
+
+
+    if(error){
+
+        console.error(
+            "Error publicaciones:",
+            error
+        );
+
+
+        contenedor.innerHTML = `
+
+            <div class="publicacion">
+
+                <h3>
+                    ⚠️ No se pudieron cargar
+                    las publicaciones
+                </h3>
+
+                <p class="publicacion-texto">
+                    ${escaparHTML(error.message)}
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    if(!data || data.length === 0){
+
+        contenedor.innerHTML = `
+
+            <div class="publicacion">
+
+                <h3>
+                    🚀 Todavía no hay publicaciones
+                </h3>
+
+                <p class="publicacion-texto">
+                    Sé el primero en crear
+                    una publicación.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    contenedor.innerHTML = "";
+
+
+    data.forEach(
+        publicacion => {
+
+            const articulo =
+            document.createElement(
+                "article"
+            );
+
+
+            articulo.className =
+            "publicacion";
+
+
+            const titulo =
+            escaparHTML(
+                publicacion.titulo ||
+                "Sin título"
+            );
+
+
+            const contenido =
+            escaparHTML(
+                publicacion.contenido ||
+                ""
+            );
+
+
+            const categoria =
+            escaparHTML(
+                publicacion.categoria ||
+                "General"
+            );
+
+
+            let fecha = "";
+
+
+            if(publicacion.created_at){
+
+                fecha =
+                new Date(
+                    publicacion.created_at
+                ).toLocaleString(
+                    "es-AR"
+                );
+
+            }
+
+
+            articulo.innerHTML = `
+
+                <h3>
+                    ${titulo}
+                </h3>
+
+                <div class="publicacion-texto">
+                    ${contenido}
+                </div>
+
+                <div class="meta">
+
+                    <span>
+                        📚 ${categoria}
+                    </span>
+
+                    ${
+                        fecha
+                        ?
+                        `<span>🕒 ${fecha}</span>`
+                        :
+                        ""
+                    }
+
+                </div>
+
+            `;
+
+
+            contenedor.appendChild(
+                articulo
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   CREAR PUBLICACIÓN
+===================================================== */
+
+async function crearPublicacion(){
+
+
+    if(!usuarioActual){
+
+        window.location.href =
+        "login.html";
+
+        return;
+
+    }
+
+
+    const categoria =
+    document
+        .getElementById(
+            "categoria"
+        )
+        .value;
+
+
+    const titulo =
+    document
+        .getElementById(
+            "tituloPublicacion"
+        )
+        .value
+        .trim();
+
+
+    const contenido =
+    document
+        .getElementById(
+            "contenidoPublicacion"
+        )
+        .value
+        .trim();
+
+
+    if(!titulo){
+
+        mostrarMensaje(
+            "❌ Escribí un título.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(!contenido){
+
+        mostrarMensaje(
+            "❌ Escribí el contenido.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const boton =
+    document.getElementById(
+        "btnPublicar"
+    );
+
+
+    boton.disabled =
+    true;
+
+
+    boton.textContent =
+    "⏳ Publicando...";
+
+
+    mostrarMensaje(
+        "",
+        ""
+    );
+
+
+    /* =============================================
+       INSERTAR
+    ============================================= */
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("publicaciones")
+        .insert({
+
+            user_id:
+            usuarioActual.id,
+
+            titulo:
+            titulo,
+
+            contenido:
+            contenido,
+
+            categoria:
+            categoria
+
+        })
+        .select()
+        .single();
+
+
+    /* =============================================
+       ERROR
+    ============================================= */
+
+    if(error){
+
+        console.error(
+            "ERROR CREANDO PUBLICACIÓN:",
+            error
+        );
+
+
+        mostrarMensaje(
+
+            "❌ No se pudo publicar: " +
+            error.message,
+
+            "error"
+
+        );
+
+
+        boton.disabled =
+        false;
+
+
+        boton.textContent =
+        "🚀 Publicar";
+
+
+        return;
+
+    }
+
+
+    /* =============================================
+       LIMPIAR
+    ============================================= */
+
+    document
+        .getElementById(
+            "tituloPublicacion"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "contenidoPublicacion"
+        )
+        .value = "";
+
+
+    mostrarMensaje(
+        "✅ ¡Publicación creada!",
+        "exito"
+    );
+
+
+    boton.disabled =
+    false;
+
+
+    boton.textContent =
+    "🚀 Publicar";
+
+
+    await cargarPublicaciones();
+
+}
+
+
+/* =====================================================
+   SELECCIONAR CATEGORÍA
+===================================================== */
+
+function seleccionarCategoria(
+    categoria
+){
+
+    document
+        .getElementById(
+            "categoria"
+        )
+        .value =
+        categoria;
+
+
+    document
+        .getElementById(
+            "tituloPublicacion"
+        )
+        .focus();
+
+
+    document
+        .querySelector(
+            ".nueva-publicacion"
+        )
+        .scrollIntoView({
+
+            behavior:"smooth",
+
+            block:"center"
+
+        });
+
+}
+
+
+/* =====================================================
+   CERRAR SESIÓN
+===================================================== */
+
+async function cerrarSesion(){
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+        .auth
+        .signOut();
+
+
+    if(error){
+
+        console.error(error);
+
+        return;
+
+    }
+
+
+    window.location.href =
+    "login.html";
+
+}
+
+
+/* =====================================================
+   ESCAPAR HTML
+===================================================== */
+
+function escaparHTML(
+    texto
+){
+
+    const div =
+    document.createElement(
+        "div"
+    );
+
+
+    div.textContent =
+    texto;
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   MENSAJES
+===================================================== */
+
+function mostrarMensaje(
+    texto,
+    tipo
+){
+
+    const elemento =
+    document.getElementById(
+        "mensaje"
+    );
+
+
+    elemento.textContent =
+    texto;
+
+
+    elemento.className =
+    tipo;
+
+}
+
+
+/* =====================================================
+   ARRANCAR
+===================================================== */
+
+iniciarForo();
+
+</script>
+
+
+</body>
+
+</html>
+

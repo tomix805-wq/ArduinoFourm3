@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Crear cuenta | Arduino Forum</title>
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+
+/* =====================================================
+   BODY
+===================================================== */
+
+body{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:25px;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e8fafa,
+            #f1edff
+        );
+
+    color:#17202a;
+
+}
+
+
+/* =====================================================
+   CONTENEDOR
+===================================================== */
+
+.registro{
+
+    width:100%;
+
+    max-width:650px;
+
+    background:white;
+
+    padding:35px;
+
+    border-radius:24px;
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,.12);
+
+}
+
+
+/* =====================================================
+   LOGO
+===================================================== */
+
+.logo{
+
+    text-align:center;
+
+    font-size:30px;
+
+    font-weight:bold;
+
+    color:#00878f;
+
+    margin-bottom:8px;
+
+}
+
+.subtitulo{
+
+    text-align:center;
+
+    color:#667085;
+
+    margin-bottom:28px;
+
+}
+
+
+/* =====================================================
+   FORMULARIO
+===================================================== */
+
+form{
+
+    display:grid;
+
+    gap:16px;
+
+}
+
+.fila{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:15px;
+
+}
+
+.grupo{
+
+    display:grid;
+
+    gap:7px;
+
+}
+
+label{
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    color:#374151;
+
+}
+
+input,
+select,
+textarea{
+
+    width:100%;
+
+    padding:13px;
+
+    border:
+        1px solid #d1d5db;
+
+    border-radius:10px;
+
+    font-family:inherit;
+
+    font-size:15px;
+
+    outline:none;
+
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+
+    border-color:#00878f;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(0,135,143,.10);
+
+}
+
+textarea{
+
+    min-height:100px;
+
+    resize:vertical;
+
+}
+
+
+/* =====================================================
+   BOTÓN
+===================================================== */
+
+button{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:11px;
+
+    background:#00878f;
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+button:hover{
+
+    background:#006f75;
+
+    transform:translateY(-1px);
+
+}
+
+button:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+    transform:none;
+
+}
+
+
+/* =====================================================
+   MENSAJE
+===================================================== */
+
+#mensaje{
+
+    min-height:24px;
+
+    text-align:center;
+
+    line-height:1.5;
+
+    font-weight:bold;
+
+}
+
+.error{
+
+    color:#dc2626;
+
+}
+
+.exito{
+
+    color:#00878f;
+
+}
+
+
+/* =====================================================
+   LINKS
+===================================================== */
+
+.links{
+
+    text-align:center;
+
+    margin-top:20px;
+
+    color:#667085;
+
+}
+
+.links a{
+
+    color:#00878f;
+
+    font-weight:bold;
+
+    text-decoration:none;
+
+}
+
+.links a:hover{
+
+    text-decoration:underline;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:600px){
+
+    body{
+
+        padding:15px;
+
+    }
+
+    .registro{
+
+        padding:25px 20px;
+
+    }
+
+    .fila{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="registro">
+
+
+<div class="logo">
+
+⚡ Arduino Forum
+
+</div>
+
+
+<p class="subtitulo">
+
+🚀 Creá tu cuenta en la comunidad
+
+</p>
+
+
+<form id="registroForm">
+
+
+<!-- =================================================
+     NOMBRE Y APELLIDO
+================================================== -->
+
+<div class="fila">
+
+
+<div class="grupo">
+
+<label for="nombre">
+Nombre *
+</label>
+
+<input
+    id="nombre"
+    type="text"
+    maxlength="50"
+    placeholder="Tu nombre"
+    required
+>
+
+</div>
+
+
+<div class="grupo">
+
+<label for="apellido">
+Apellido *
+</label>
+
+<input
+    id="apellido"
+    type="text"
+    maxlength="50"
+    placeholder="Tu apellido"
+    required
+>
+
+</div>
+
+</div>
+
+
+<!-- =================================================
+     USERNAME
+================================================== -->
+
+<div class="grupo">
+
+<label for="username">
+Nombre de usuario *
+</label>
+
+<input
+    id="username"
+    type="text"
+    maxlength="30"
+    placeholder="Ej: TomiArduino"
+    required
+>
+
+</div>
+
+
+<!-- =================================================
+     EMAIL
+================================================== -->
+
+<div class="grupo">
+
+<label for="email">
+Correo electrónico *
+</label>
+
+<input
+    id="email"
+    type="email"
+    placeholder="correo@ejemplo.com"
+    required
+>
+
+</div>
+
+
+<!-- =================================================
+     PAÍS
+================================================== -->
+
+<div class="grupo">
+
+<label for="pais">
+País *
+</label>
+
+<select
+    id="pais"
+    required
+>
+
+<option value="">
+Seleccioná tu país
+</option>
+
+<option value="Argentina">
+🇦🇷 Argentina
+</option>
+
+<option value="Brasil">
+🇧🇷 Brasil
+</option>
+
+<option value="Chile">
+🇨🇱 Chile
+</option>
+
+<option value="Uruguay">
+🇺🇾 Uruguay
+</option>
+
+<option value="Paraguay">
+🇵🇾 Paraguay
+</option>
+
+<option value="Bolivia">
+🇧🇴 Bolivia
+</option>
+
+<option value="Perú">
+🇵🇪 Perú
+</option>
+
+<option value="Colombia">
+🇨🇴 Colombia
+</option>
+
+<option value="México">
+🇲🇽 México
+</option>
+
+<option value="España">
+🇪🇸 España
+</option>
+
+<option value="Otro">
+🌎 Otro
+</option>
+
+</select>
+
+</div>
+
+
+<!-- =================================================
+     BIO
+================================================== -->
+
+<div class="grupo">
+
+<label for="bio">
+Biografía
+</label>
+
+<textarea
+    id="bio"
+    maxlength="500"
+    placeholder="Contanos sobre tus proyectos, qué estás aprendiendo, etc."
+></textarea>
+
+</div>
+
+
+<!-- =================================================
+     CONTRASEÑA
+================================================== -->
+
+<div class="grupo">
+
+<label for="password">
+Contraseña *
+</label>
+
+<input
+    id="password"
+    type="password"
+    minlength="6"
+    placeholder="Mínimo 6 caracteres"
+    required
+>
+
+</div>
+
+
+<!-- =================================================
+     CONFIRMAR CONTRASEÑA
+================================================== -->
+
+<div class="grupo">
+
+<label for="password2">
+Repetir contraseña *
+</label>
+
+<input
+    id="password2"
+    type="password"
+    minlength="6"
+    placeholder="Repetí tu contraseña"
+    required
+>
+
+</div>
+
+
+<!-- =================================================
+     BOTÓN
+================================================== -->
+
+<button
+    id="btnRegistrar"
+    type="submit"
+>
+
+🚀 Crear cuenta
+
+</button>
+
+
+<p id="mensaje"></p>
+
+
+</form>
+
+
+<!-- =================================================
+     LINKS
+================================================== -->
+
+<div class="links">
+
+<p>
+
+¿Ya tenés una cuenta?
+
+<a href="login.html">
+Iniciar sesión
+</a>
+
+</p>
+
+<br>
+
+<a href="index.html">
+← Volver al inicio
+</a>
+
+</div>
+
+
+</div>
+
+
+<!-- =====================================================
+     SUPABASE
+===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+<script>
+
+/* =====================================================
+   CONFIGURACIÓN SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+"https://krhrbydwcpeumxilkuhs.supabase.co";
+
+
+
+const SUPABASE_KEY =
+"sb_publishable_pod-dyUz9qxC7BtehFoAsw_2hhSCNYN";
+
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+/* =====================================================
+   ELEMENTOS
+===================================================== */
+
+const formulario =
+document.getElementById(
+    "registroForm"
+);
+
+const boton =
+document.getElementById(
+    "btnRegistrar"
+);
+
+const mensaje =
+document.getElementById(
+    "mensaje"
+);
+
+
+/* =====================================================
+   FUNCIÓN MENSAJE
+===================================================== */
+
+function mostrarMensaje(
+    texto,
+    tipo
+){
+
+    mensaje.textContent =
+    texto;
+
+    mensaje.className =
+    tipo;
+
+}
+
+
+/* =====================================================
+   REGISTRO
+===================================================== */
+
+formulario.addEventListener(
+    "submit",
+    async function(event){
+
+        event.preventDefault();
+
+
+        /* =============================================
+           OBTENER DATOS
+        ============================================= */
+
+        const nombre =
+        document
+            .getElementById("nombre")
+            .value
+            .trim();
+
+
+        const apellido =
+        document
+            .getElementById("apellido")
+            .value
+            .trim();
+
+
+        const username =
+        document
+            .getElementById("username")
+            .value
+            .trim();
+
+
+        const email =
+        document
+            .getElementById("email")
+            .value
+            .trim()
+            .toLowerCase();
+
+
+        const pais =
+        document
+            .getElementById("pais")
+            .value;
+
+
+        const bio =
+        document
+            .getElementById("bio")
+            .value
+            .trim();
+
+
+        const password =
+        document
+            .getElementById("password")
+            .value;
+
+
+        const password2 =
+        document
+            .getElementById("password2")
+            .value;
+
+
+        /* =============================================
+           VALIDACIONES
+        ============================================= */
+
+        if(
+            !nombre ||
+            !apellido ||
+            !username ||
+            !email ||
+            !pais ||
+            !password
+        ){
+
+            mostrarMensaje(
+                "❌ Completá todos los campos obligatorios.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        if(username.length < 3){
+
+            mostrarMensaje(
+                "❌ El usuario debe tener al menos 3 caracteres.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        if(password.length < 6){
+
+            mostrarMensaje(
+                "❌ La contraseña debe tener al menos 6 caracteres.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        if(password !== password2){
+
+            mostrarMensaje(
+                "❌ Las contraseñas no coinciden.",
+                "error"
+            );
+
+            return;
+
+        }
+
+
+        /* =============================================
+           DESACTIVAR BOTÓN
+        ============================================= */
+
+        boton.disabled =
+        true;
+
+        boton.textContent =
+        "⏳ Creando cuenta...";
+
+
+        mostrarMensaje(
+            "",
+            ""
+        );
+
+
+        /* =============================================
+           COMPROBAR USERNAME
+        ============================================= */
+
+        const {
+            data: perfilExistente,
+            error: errorBusqueda
+        } =
+        await supabaseClient
+            .from("profiles")
+            .select("id")
+            .eq(
+                "username",
+                username
+            )
+            .maybeSingle();
+
+
+        if(errorBusqueda){
+
+            console.error(
+                "Error buscando username:",
+                errorBusqueda
+            );
+
+            mostrarMensaje(
+                "❌ Error comprobando el nombre de usuario: " +
+                errorBusqueda.message,
+                "error"
+            );
+
+            restaurarBoton();
+
+            return;
+
+        }
+
+
+        if(perfilExistente){
+
+            mostrarMensaje(
+                "❌ Ese nombre de usuario ya está ocupado.",
+                "error"
+            );
+
+            restaurarBoton();
+
+            return;
+
+        }
+
+
+        /* =============================================
+           CREAR USUARIO EN AUTH
+        ============================================= */
+
+        const {
+            data: authData,
+            error: authError
+        } =
+        await supabaseClient.auth.signUp({
+
+            email:
+            email,
+
+            password:
+            password,
+
+            options:{
+
+                data:{
+
+                    username:
+                    username,
+
+                    nombre:
+                    nombre,
+
+                    apellido:
+                    apellido,
+
+                    pais:
+                    pais
+
+                }
+
+            }
+
+        });
+
+
+        /* =============================================
+           ERROR AUTH
+        ============================================= */
+
+        if(authError){
+
+            console.error(
+                "ERROR AUTH:",
+                authError
+            );
+
+            mostrarMensaje(
+                "❌ " +
+                authError.message,
+                "error"
+            );
+
+            restaurarBoton();
+
+            return;
+
+        }
+
+
+        if(!authData.user){
+
+            mostrarMensaje(
+                "❌ Supabase no devolvió el usuario.",
+                "error"
+            );
+
+            restaurarBoton();
+
+            return;
+
+        }
+
+
+        const userId =
+        authData.user.id;
+
+
+        /* =============================================
+           COMPROBAR SESIÓN
+        ============================================= */
+
+        if(!authData.session){
+
+            mostrarMensaje(
+                "📧 La cuenta fue creada, pero Supabase requiere confirmar el correo electrónico.",
+                "error"
+            );
+
+            restaurarBoton();
+
+            return;
+
+        }
+
+
+        /* =============================================
+           GUARDAR PERFIL
+        ============================================= */
+
+        const {
+            data: perfil,
+            error: perfilError
+        } =
+        await supabaseClient
+            .from("profiles")
+            .insert({
+
+                id:
+                userId,
+
+                username:
+                username,
+
+                email:
+                email,
+
+                nombre:
+                nombre,
+
+                apellido:
+                apellido,
+
+                pais:
+                pais,
+
+                bio:
+                bio,
+
+                nivel:
+                1,
+
+                puntos:
+                0,
+
+                rango:
+                "Principiante"
+
+            })
+            .select()
+            .single();
+
+
+        /* =============================================
+           ERROR PROFILE
+        ============================================= */
+
+        if(perfilError){
+
+            console.error(
+                "ERROR PROFILES:",
+                perfilError
+            );
+
+
+            /*
+             * Si el error es por username duplicado,
+             * mostramos un mensaje más claro.
+             */
+
+            if(
+                perfilError.code === "23505"
+            ){
+
+                mostrarMensaje(
+                    "❌ Ese nombre de usuario ya existe.",
+                    "error"
+                );
+
+            }
+
+            else{
+
+                mostrarMensaje(
+                    "❌ Error guardando el perfil: " +
+                    perfilError.message,
+                    "error"
+                );
+
+            }
+
+
+            restaurarBoton();
+
+            return;
+
+        }
+
+
+        /* =============================================
+           ÉXITO
+        ============================================= */
+
+        console.log(
+            "Usuario creado:",
+            authData.user
+        );
+
+        console.log(
+            "Perfil creado:",
+            perfil
+        );
+
+
+        mostrarMensaje(
+            "🎉 ¡Cuenta creada correctamente! Entrando al foro...",
+            "exito"
+        );
+
+
+        /* =============================================
+           IR AL FORO
+        ============================================= */
+
+        setTimeout(
+            function(){
+
+                window.location.href =
+                "foro.html";
+
+            },
+            800
+        );
+
+    }
+);
+
+
+/* =====================================================
+   RESTAURAR BOTÓN
+===================================================== */
+
+function restaurarBoton(){
+
+    boton.disabled =
+    false;
+
+    boton.textContent =
+    "🚀 Crear cuenta";
+
+}
+
+</script>
+
+
+</body>
+
+</html>
+

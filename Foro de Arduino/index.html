@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Arduino Forum | Comunidad Arduino en Español</title>
+
+    <style>
+        /* =========================
+           ESTILOS GENERALES
+        ========================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7fb;
+            color: #17202a;
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            width: 100%;
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 18px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00878f;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        nav a {
+            color: #374151;
+            font-weight: 600;
+            transition: 0.2s;
+        }
+
+        nav a:hover {
+            color: #00878f;
+            transform: translateY(-2px);
+        }
+
+        .btn-login {
+            background: #00878f;
+            color: white !important;
+            padding: 10px 17px;
+            border-radius: 10px;
+        }
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .hero {
+            min-height: 520px;
+            padding: 80px 8%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+            background: linear-gradient(135deg, #e7fbfc, #ffffff);
+        }
+
+        .texto {
+            max-width: 650px;
+        }
+
+        .texto h1 {
+            font-size: clamp(38px, 5vw, 64px);
+            line-height: 1.1;
+            margin-bottom: 25px;
+            color: #17202a;
+        }
+
+        .texto p {
+            font-size: 18px;
+            color: #5b6470;
+            margin-bottom: 30px;
+        }
+
+        .imagen {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .imagen img {
+            width: min(300px, 70vw);
+            height: auto;
+            filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.12));
+        }
+
+        /* =========================
+           BOTONES
+        ========================= */
+
+        .botones {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #00878f;
+            color: white;
+            padding: 13px 22px;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background: #006f75;
+        }
+
+        .btn2 {
+            background: white;
+            color: #00878f;
+            border: 2px solid #00878f;
+        }
+
+        .btn2:hover {
+            background: #00878f;
+            color: white;
+        }
+
+        /* =========================
+           SECCIONES
+        ========================= */
+
+        section {
+            padding: 65px 8%;
+        }
+
+        .titulo {
+            text-align: center;
+            font-size: 34px;
+            margin-bottom: 35px;
+        }
+
+        /* =========================
+           GRID
+        ========================= */
+
+        .grid {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 22px;
+        }
+
+        /* =========================
+           CARDS
+        ========================= */
+
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.09);
+        }
+
+        .card h3 {
+            margin-bottom: 12px;
+            font-size: 21px;
+        }
+
+        .card p {
+            color: #626b75;
+        }
+
+        .mini-btn {
+            display: inline-block;
+            margin-top: 18px;
+            color: #00878f;
+            font-weight: bold;
+        }
+
+        .mini-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* =========================
+           COMUNIDAD
+        ========================= */
+
+        .comunidad {
+            max-width: 900px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .comunidad h3 {
+            font-size: 28px;
+        }
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            background: #17202a;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 850px) {
+
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 60px;
+            }
+
+            .botones {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            nav {
+                gap: 10px;
+                font-size: 14px;
+            }
+
+            .texto h1 {
+                font-size: 38px;
+            }
+
+            .texto p {
+                font-size: 16px;
+            }
+
+            section {
+                padding: 45px 5%;
+            }
+
+            .titulo {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header>
+
+        <div class="logo">
+            ⚡ Arduino Forum
+        </div>
+
+        <nav>
+
+            <a href="index.html">
+                Inicio
+            </a>
+
+            <a href="foro.html">
+                Foro
+            </a>
+
+            <a href="proyectos.html">
+                Proyectos
+            </a>
+
+            <a href="usuarios.html">
+                Usuarios
+            </a>
+j
+            <a href="login.html" class="btn-login">
+                🔐 Entrar
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="hero">
+
+        <div class="texto">
+
+            <h1>
+                La comunidad de Arduino en español
+            </h1>
+
+            <p>
+                Aprende electrónica, programación y robótica.
+                Comparte proyectos, resuelve dudas y descubre
+                nuevas ideas con una comunidad enfocada en
+                Arduino, ESP32, Raspberry Pi y mucho más.
+            </p>
+
+            <div class="botones">
+
+                <a href="registro.html" class="btn">
+                    🚀 Crear cuenta
+                </a>
+
+                <a href="foro.html" class="btn btn2">
+                    💬 Explorar foro
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="imagen">
+
+            <img
+                src="https://upload.wikimedia.org/wikipedia/commons/8/87/Arduino_Logo.svg"
+                alt="Logo de Arduino">
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         QUÉ ENCONTRARÁS
+    ========================== -->
+
+    <section>
+
+        <h2 class="titulo">
+            ¿Qué encontrarás aquí?
+        </h2>
+
+        <div class="grid">
+
+            <div class="card">
+
+                <h3>
+                    🔧 Comparte proyectos
+                </h3>
+
+                <p>
+                    Publica tus proyectos de Arduino, ESP32,
+                    Raspberry Pi y electrónica para que otros
+                    puedan aprender e inspirarse.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    ❓ Resuelve tus dudas
+                </h3>
+
+                <p>
+                    Pregunta sobre programación, sensores,
+                    motores, pantallas LCD, IoT y mucho más.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    🧠 Aprende con la comunidad
+                </h3>
+
+                <p>
+                    Participa en debates, comenta publicaciones
+                    y ayuda a otros usuarios con sus proyectos.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CATEGORÍAS
+    ========================== -->
+
+    <section>
+
+        <h2 class="titulo">
+            Categorías principales
+        </h2>
+
+        <div class="grid">
+
+            <div class="card">
+
+                <h3>
+                    🔵 Arduino
+                </h3>
+
+                <p>
+                    Todo sobre placas Arduino, sensores,
+                    módulos y proyectos.
+                </p>
+
+                <a href="foro.html?categoria=1" class="mini-btn">
+                    Ver categoría →
+                </a>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    🟣 ESP32
+                </h3>
+
+                <p>
+                    WiFi, Bluetooth, IoT, servidores web
+                    y automatización.
+                </p>
+
+                <a href="foro.html?categoria=2" class="mini-btn">
+                    Ver categoría →
+                </a>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    🤖 Robótica
+                </h3>
+
+                <p>
+                    Robots, motores, servos,
+                    controladores y proyectos.
+                </p>
+
+                <a href="foro.html?categoria=3" class="mini-btn">
+                    Ver categoría →
+                </a>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    🟢 Raspberry Pi
+                </h3>
+
+                <p>
+                    Linux, Python, automatización
+                    y proyectos con Raspberry Pi.
+                </p>
+
+                <a href="foro.html?categoria=4" class="mini-btn">
+                    Ver categoría →
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         PROYECTOS
+    ========================== -->
+
+    <section>
+
+        <h2 class="titulo">
+            🚀 Proyectos destacados
+        </h2>
+
+        <div class="grid">
+
+            <div class="card">
+
+                <h3>
+                    🌦️ Estación meteorológica
+                </h3>
+
+                <p>
+                    Proyecto con sensores de temperatura
+                    y humedad utilizando Arduino.
+                </p>
+
+                <a href="proyectos.html" class="mini-btn">
+                    Ver proyecto →
+                </a>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    🏠 Casa inteligente
+                </h3>
+
+                <p>
+                    Controla luces y dispositivos desde
+                    tu celular usando ESP32.
+                </p>
+
+                <a href="proyectos.html" class="mini-btn">
+                    Ver proyecto →
+                </a>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    🤖 Robot evita obstáculos
+                </h3>
+
+                <p>
+                    Aprende a construir un robot autónomo
+                    con sensores ultrasónicos.
+                </p>
+
+                <a href="proyectos.html" class="mini-btn">
+                    Ver proyecto →
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         RECURSOS
+    ========================== -->
+
+    <section>
+
+        <h2 class="titulo">
+            📚 Recursos recomendados
+        </h2>
+
+        <div class="grid">
+
+            <div class="card">
+
+                <h3>
+                    📖 Guías para principiantes
+                </h3>
+
+                <p>
+                    Aprende desde cero cómo instalar
+                    el IDE de Arduino y conectar
+                    componentes básicos.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    📦 Librerías
+                </h3>
+
+                <p>
+                    Información sobre librerías para
+                    pantallas, sensores, motores
+                    y comunicación.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    💻 Tutoriales
+                </h3>
+
+                <p>
+                    Tutoriales paso a paso para crear
+                    proyectos de automatización,
+                    robótica e IoT.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         NORMAS
+    ========================== -->
+
+    <section>
+
+        <h2 class="titulo">
+            📜 Normas del foro
+        </h2>
+
+        <div class="grid">
+
+            <div class="card">
+
+                <h3>
+                    🤝 Respeto
+                </h3>
+
+                <p>
+                    Mantén siempre un trato respetuoso
+                    con todos los miembros.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    📝 Publicaciones claras
+                </h3>
+
+                <p>
+                    Describe tu problema o proyecto
+                    con la mayor cantidad de información
+                    posible.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    🚫 Contenido no permitido
+                </h3>
+
+                <p>
+                    No publiques spam, publicidad
+                    no autorizada ni contenido ofensivo.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         PREGUNTAS FRECUENTES
+    ========================== -->
+
+    <section>
+
+        <h2 class="titulo">
+            ❓ Preguntas frecuentes
+        </h2>
+
+        <div class="grid">
+
+            <div class="card">
+
+                <h3>
+                    ¿Necesito experiencia?
+                </h3>
+
+                <p>
+                    No. El foro está pensado tanto para
+                    principiantes como para usuarios avanzados.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    ¿Puedo compartir mis proyectos?
+                </h3>
+
+                <p>
+                    Sí. Puedes mostrar tus proyectos,
+                    recibir opiniones y ayudar a otros.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    ¿El registro es gratuito?
+                </h3>
+
+                <p>
+                    Sí. Crear una cuenta y participar
+                    es completamente gratuito.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         COMUNIDAD
+    ========================== -->
+
+    <section>
+
+        <h2 class="titulo">
+            🌎 Únete a la comunidad
+        </h2>
+
+        <div class="card comunidad">
+
+            <h3>
+                Comienza hoy 🚀
+            </h3>
+
+            <br>
+
+            <p>
+                Forma parte de una comunidad dedicada
+                a Arduino, ESP32, Raspberry Pi,
+                robótica y electrónica.
+            </p>
+
+            <br>
+
+            <p>
+                Comparte conocimientos, aprende nuevas
+                tecnologías y desarrolla proyectos
+                junto a otros entusiastas.
+            </p>
+
+            <br>
+
+            <a href="registro.html" class="btn">
+                Crear una cuenta
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <p>
+            © 2026 Arduino Forum
+        </p>
+
+        <p>
+            Comunidad de Electrónica, Programación y Robótica
+        </p>
+
+    </footer>
+
+</body>
+
+</html>
+
