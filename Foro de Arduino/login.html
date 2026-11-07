@@ -205,19 +205,23 @@ Iniciá sesión en tu cuenta
 
 <div>
 
-<label for="email">
+<label for="identifier">
 
-Correo electrónico
+Correo electrónico o usuario
 
 </label>
 
 <input
-    id="email"
-    type="email"
-    autocomplete="email"
-    placeholder="correo@ejemplo.com"
+    id="identifier"
+    type="text"
+    autocomplete="username"
+    placeholder="correo@ejemplo.com o tu usuario"
     required
 >
+
+<p style="margin-top:6px;font-size:13px;color:#667085;">
+¿Olvidaste tu correo? Podés iniciar sesión con tu nombre de usuario.
+</p>
 
 </div>
 
@@ -371,13 +375,11 @@ form.addEventListener(
         event.preventDefault();
 
 
-        const email =
+        const identifier =
         document
-            .getElementById("email")
+            .getElementById("identifier")
             .value
-            .trim()
-            .toLowerCase();
-
+            .trim();
 
         const password =
         document
@@ -394,6 +396,57 @@ form.addEventListener(
 
         boton.textContent =
         "🔄 Iniciando sesión...";
+
+
+        /*
+        ===============================================
+        RESOLVER EMAIL (POR SI USA NOMBRE DE USUARIO)
+        ===============================================
+        */
+
+        let email = identifier.toLowerCase();
+
+        if(!identifier.includes("@")){
+
+            const {
+                data: perfil,
+                error: perfilError
+            } =
+            await supabaseClient
+                .from("profiles")
+                .select("email")
+                .eq(
+                    "username",
+                    identifier
+                )
+                .maybeSingle();
+
+            if(perfilError || !perfil || !perfil.email){
+
+                console.error(
+                    "No se pudo resolver el usuario:",
+                    perfilError
+                );
+
+                mensaje.textContent =
+                "❌ No encontramos una cuenta con ese usuario. Probá con tu correo electrónico.";
+
+                mensaje.className =
+                "error";
+
+                boton.disabled =
+                false;
+
+                boton.textContent =
+                "🔐 Iniciar sesión";
+
+                return;
+
+            }
+
+            email = String(perfil.email).trim().toLowerCase();
+
+        }
 
 
         /*

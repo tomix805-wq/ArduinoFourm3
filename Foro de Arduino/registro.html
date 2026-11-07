@@ -436,6 +436,26 @@ Correo electrónico *
 
 
 <!-- =================================================
+     TELÉFONO (OPCIONAL)
+================================================== -->
+
+<div class="grupo">
+
+<label for="telefono">
+Teléfono (opcional)
+</label>
+
+<input
+    id="telefono"
+    type="tel"
+    autocomplete="tel"
+    placeholder="Ej: +54 11 1234-5678"
+>
+
+</div>
+
+
+<!-- =================================================
      PAÍS
 ================================================== -->
 
@@ -723,6 +743,13 @@ formulario.addEventListener(
             .toLowerCase();
 
 
+        const telefono =
+        document
+            .getElementById("telefono")
+            .value
+            .trim();
+
+
         const pais =
         document
             .getElementById("pais")
@@ -1007,6 +1034,9 @@ formulario.addEventListener(
 
                 bio:
                 bio,
+
+                telefono:
+                telefono || null,
 
                 nivel:
                 1,
