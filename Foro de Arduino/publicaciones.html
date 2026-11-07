@@ -1,305 +1,1199 @@
+<!DOCTYPE html>
+<html lang="es">
 
-<!-- FORO DE PREGUNTAS -->
-<section class="foro">
+<head>
 
-  <div class="foro-encabezado">
-    <span>⚡ COMUNIDAD ARDUINO</span>
-    <h2>Foro de preguntas</h2>
-    <p>Compartí tus dudas, proyectos y conocimientos.</p>
-  </div>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <div class="foro-card">
-    <h3>✏️ Crear pregunta</h3>
+<title>Publicaciones | Arduino Forum</title>
 
-    <input
-      id="tituloPregunta"
-      type="text"
-      placeholder="Título de la pregunta"
-      maxlength="120">
+<link rel="stylesheet" href="css/publicaciones.css">
 
-    <textarea
-      id="contenidoPregunta"
-      placeholder="Describe tu problema o proyecto..."
-      rows="5"></textarea>
+</head>
 
-    <select id="categoria">
-      <option value="Arduino">Arduino</option>
-      <option value="ESP32">ESP32</option>
-      <option value="Robótica">Robótica</option>
-    </select>
 
-    <button id="btnPublicar" onclick="publicarPregunta()">
-      Publicar pregunta →
-    </button>
-  </div>
+<body>
 
-  <div class="foro-explorar">
-    <h3>🌎 Explorar preguntas</h3>
 
-    <input
-      id="buscarPregunta"
-      type="search"
-      placeholder="🔎 Buscar una pregunta..."
-      oninput="mostrarPreguntas()">
+<!-- =====================================================
+     HEADER
+===================================================== -->
 
-    <div class="foro-filtros">
-      <button class="activo" onclick="filtrar('Todas',this)">Todas</button>
-      <button onclick="filtrar('Arduino',this)">Arduino</button>
-      <button onclick="filtrar('ESP32',this)">ESP32</button>
-      <button onclick="filtrar('Robótica',this)">Robótica</button>
-    </div>
+<header>
 
-    <div id="preguntas">
-      <p>Cargando preguntas...</p>
-    </div>
-  </div>
+<a href="index.html" class="logo">
+⚡ Arduino Forum
+</a>
+
+
+<nav>
+
+<a href="index.html">
+Inicio
+</a>
+
+<a href="foro.html">
+💬 Foro
+</a>
+
+<a href="proyectos.html">
+🚀 Proyectos
+</a>
+
+<a href="publicaciones.html" class="activo">
+📝 Publicaciones
+</a>
+
+<a href="usuarios.html">
+👥 Usuarios
+</a>
+
+<a href="perfil-publico.html">
+👤 Mi perfil
+</a>
+
+<button type="button" onclick="cerrarSesion()">
+🚪 Salir
+</button>
+
+</nav>
+
+</header>
+
+
+<!-- =====================================================
+     CONTENIDO
+===================================================== -->
+
+<main class="container">
+
+
+<div id="cargando" class="cargando">
+⏳ Cargando publicaciones...
+</div>
+
+
+<div id="contenido" hidden>
+
+
+<!-- =================================================
+     BIENVENIDA
+================================================== -->
+
+<section class="hero">
+
+<div class="hero-texto">
+
+<span class="etiqueta">
+📝 COMUNIDAD ARDUINO
+</span>
+
+<h1>
+Publicaciones
+</h1>
+
+<p>
+Compartí tus proyectos, dudas y descubrimientos
+con la comunidad Arduino.
+</p>
+
+</div>
+
+
+<div class="usuario">
+
+<div id="avatarInicial" class="avatar-inicial">
+?
+</div>
+
+<img id="avatar" class="avatar" alt="Foto de perfil" hidden>
+
+<div class="usuario-info">
+
+<strong id="nombreUsuario">
+Usuario
+</strong>
+
+<span id="datosUsuario">
+Principiante · Nivel 1 · 0 puntos
+</span>
+
+</div>
+
+</div>
 
 </section>
 
-<style>
-.foro {
-  max-width: 900px;
-  margin: 35px auto;
-  padding: 20px;
-}
 
-.foro-encabezado {
-  margin-bottom: 25px;
-}
+<!-- =================================================
+     CREAR PUBLICACIÓN
+================================================== -->
 
-.foro-encabezado span {
-  color: #927bff;
-  font-size: 12px;
-  font-weight: bold;
-  letter-spacing: 2px;
-}
+<section class="panel">
 
-.foro-encabezado h2 {
-  font-size: 30px;
-  margin: 10px 0;
-}
+<h2>
+✏️ Crear publicación
+</h2>
 
-.foro-encabezado p {
-  opacity: .7;
-}
 
-.foro-card,
-.pregunta-publicada {
-  background: #171d30;
-  border: 1px solid #303954;
-  border-radius: 16px;
-  padding: 22px;
-  margin-bottom: 22px;
-}
+<form id="formPublicacion" onsubmit="crearPublicacion(event)">
 
-.foro-card input,
-.foro-card textarea,
-.foro-card select,
-.foro-explorar input {
-  display: block;
-  width: 100%;
-  box-sizing: border-box;
-  padding: 13px;
-  margin: 10px 0;
-  border: 1px solid #38435f;
-  border-radius: 9px;
-  background: #101629;
-  color: white;
-  font: inherit;
-}
+<label for="categoria">
+Categoría
+</label>
 
-.foro-card button {
-  width: 100%;
-  padding: 14px;
-  background: #795bff;
-  color: white;
-  border: 0;
-  border-radius: 9px;
-  font-weight: bold;
-  cursor: pointer;
-}
+<select id="categoria">
 
-.foro-card button:disabled {
-  opacity: .6;
-}
+<option value="Arduino">
+🔵 Arduino
+</option>
 
-.foro-filtros {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 15px 0;
-}
+<option value="ESP32">
+🟣 ESP32
+</option>
 
-.foro-filtros button {
-  padding: 9px 15px;
-  background: #171d30;
-  border: 1px solid #38435f;
-  color: white;
-  border-radius: 20px;
-  cursor: pointer;
-}
+<option value="Robótica">
+🤖 Robótica
+</option>
 
-.foro-filtros button.activo {
-  background: #795bff;
-}
+<option value="Raspberry Pi">
+🍓 Raspberry Pi
+</option>
 
-.pregunta-publicada h3 {
-  margin: 15px 0 8px;
-}
+</select>
 
-.pregunta-publicada p {
-  white-space: pre-wrap;
-  line-height: 1.6;
-}
 
-.pregunta-meta {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
-  font-size: 12px;
-  opacity: .7;
-}
+<label for="tituloPublicacion">
+Título
+</label>
 
-.pregunta-categoria {
-  color: #c6baff;
-  background: #30275b;
-  padding: 5px 10px;
-  border-radius: 20px;
-}
+<input
+    id="tituloPublicacion"
+    type="text"
+    maxlength="150"
+    placeholder="Título de la publicación..."
+    required
+>
 
-.foro-vacio {
-  padding: 25px;
-  text-align: center;
-  opacity: .7;
-}
 
-@media(max-width:600px) {
-  .foro {
-    padding: 12px;
-  }
-}
-</style>
+<label for="contenidoPublicacion">
+Contenido
+</label>
+
+<textarea
+    id="contenidoPublicacion"
+    maxlength="5000"
+    rows="6"
+    placeholder="Escribí tu pregunta, problema o proyecto..."
+    required
+></textarea>
+
+
+<button
+    id="btnPublicar"
+    class="btn"
+    type="submit"
+>
+
+🚀 Publicar
+
+</button>
+
+
+<p
+    id="mensaje"
+    class="mensaje"
+    role="status"
+    aria-live="polite"
+></p>
+
+</form>
+
+</section>
+
+
+<!-- =================================================
+     EXPLORAR PUBLICACIONES
+================================================== -->
+
+<section class="explorar">
+
+<div class="explorar-encabezado">
+
+<h2>
+🌎 Explorar publicaciones
+</h2>
+
+<span id="contadorPublicaciones" class="contador"></span>
+
+</div>
+
+
+<input
+    id="buscarPublicacion"
+    type="search"
+    placeholder="🔎 Buscar una publicación..."
+    oninput="mostrarPublicaciones()"
+>
+
+
+<div class="filtros" role="group" aria-label="Filtrar por categoría">
+
+<button type="button" class="activo" onclick="filtrar('Todas', this)">
+Todas
+</button>
+
+<button type="button" onclick="filtrar('Arduino', this)">
+🔵 Arduino
+</button>
+
+<button type="button" onclick="filtrar('ESP32', this)">
+🟣 ESP32
+</button>
+
+<button type="button" onclick="filtrar('Robótica', this)">
+🤖 Robótica
+</button>
+
+<button type="button" onclick="filtrar('Raspberry Pi', this)">
+🍓 Raspberry Pi
+</button>
+
+</div>
+
+
+<div id="publicaciones" class="publicaciones">
+
+<div class="estado">
+⏳ Cargando publicaciones...
+</div>
+
+</div>
+
+</section>
+
+
+</div>
+
+</main>
+
+
+<footer>
+
+© 2026 Arduino Forum | Comunidad Arduino en Español
+
+</footer>
+
+
+<!-- =====================================================
+     SUPABASE
+===================================================== -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 
 <script>
-let preguntasGuardadas = [];
+
+/* =====================================================
+   CONFIGURACIÓN DE SUPABASE
+===================================================== */
+
+const SUPABASE_URL =
+"https://krhrbydwcpeumxilkuhs.supabase.co";
+
+
+const SUPABASE_KEY =
+"sb_publishable_pod-dyUz9qxC7BtehFoAsw_2hhSCNYN";
+
+
+const supabaseClient =
+window.supabase
+    ? window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    )
+    : null;
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+let usuarioActual = null;
+
+let perfilActual = null;
+
+let publicacionesGuardadas = [];
+
 let categoriaActiva = "Todas";
 
-async function publicarPregunta() {
-  const titulo = document.getElementById("tituloPregunta").value.trim();
-  const contenido = document.getElementById("contenidoPregunta").value.trim();
-  const categoria = document.getElementById("categoria").value;
-  const boton = document.getElementById("btnPublicar");
+let perfilesPorId = new Map();
 
-  if (!titulo || !contenido) {
-    alert("Completá todos los campos.");
-    return;
-  }
 
-  boton.disabled = true;
-  boton.textContent = "Publicando...";
+/* =====================================================
+   INICIAR PÁGINA
+===================================================== */
 
-  try {
-    const { error } = await supabase
-      .from("preguntas")
-      .insert([{ titulo, contenido, categoria }]);
+document.addEventListener(
+    "DOMContentLoaded",
+    iniciar
+);
 
-    if (error) throw error;
 
-    document.getElementById("tituloPregunta").value = "";
-    document.getElementById("contenidoPregunta").value = "";
+async function iniciar(){
 
-    await cargarPreguntas();
 
-  } catch (error) {
-    console.error(error);
-    alert("No se pudo publicar la pregunta.");
-  } finally {
-    boton.disabled = false;
-    boton.textContent = "Publicar pregunta →";
-  }
+    if(!supabaseClient){
+
+        mostrarErrorCarga(
+            "❌ No se pudo cargar Supabase. Revisá tu conexión."
+        );
+
+        return;
+
+    }
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .auth
+        .getSession();
+
+
+    if(error){
+
+        console.error(
+            "Error de sesión:",
+            error
+        );
+
+        mostrarErrorCarga(
+            "❌ No se pudo comprobar la sesión."
+        );
+
+        return;
+
+    }
+
+
+    usuarioActual =
+    data.session?.user;
+
+
+    if(!usuarioActual){
+
+        window.location.href =
+        "login.html";
+
+        return;
+
+    }
+
+
+    await cargarPerfil();
+
+    await cargarPublicaciones();
+
+
+    document
+        .getElementById("cargando")
+        .hidden = true;
+
+
+    document
+        .getElementById("contenido")
+        .hidden = false;
+
 }
 
-async function cargarPreguntas() {
-  const { data, error } = await supabase
-    .from("preguntas")
-    .select("*")
-    .order("created_at", { ascending: false });
 
-  if (error) {
-    console.error(error);
-    document.getElementById("preguntas").innerHTML =
-      '<div class="foro-vacio">Error al cargar las preguntas.</div>';
-    return;
-  }
+/* =====================================================
+   CARGAR PERFIL
+===================================================== */
 
-  preguntasGuardadas = data || [];
-  mostrarPreguntas();
+async function cargarPerfil(){
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("profiles")
+        .select(
+            "username,nombre,apellido,avatar_url,nivel,puntos,rango"
+        )
+        .eq(
+            "id",
+            usuarioActual.id
+        )
+        .maybeSingle();
+
+
+    if(error){
+
+        console.error(
+            "Error perfil:",
+            error
+        );
+
+    }
+
+
+    perfilActual =
+    data || null;
+
+
+    const nombre =
+        data?.username ||
+        data?.nombre ||
+        usuarioActual.email ||
+        "Usuario";
+
+
+    document
+        .getElementById("nombreUsuario")
+        .textContent =
+        nombre;
+
+
+    document
+        .getElementById("datosUsuario")
+        .textContent =
+
+        `${data?.rango || "🌱 Principiante"} · Nivel ${data?.nivel || 1} · ${data?.puntos || 0} puntos`;
+
+
+    /* AVATAR */
+
+    const avatar =
+    document.getElementById("avatar");
+
+    const avatarInicial =
+    document.getElementById("avatarInicial");
+
+
+    if(data?.avatar_url){
+
+        avatar.src =
+        data.avatar_url;
+
+        avatar.hidden =
+        false;
+
+        avatarInicial.hidden =
+        true;
+
+    }
+    else{
+
+        avatarInicial.textContent =
+        String(nombre)
+            .charAt(0)
+            .toUpperCase();
+
+    }
+
 }
 
-function filtrar(categoria, boton) {
-  categoriaActiva = categoria;
 
-  document.querySelectorAll(".foro-filtros button")
-    .forEach(b => b.classList.remove("activo"));
+/* =====================================================
+   CARGAR PUBLICACIONES
+===================================================== */
 
-  boton.classList.add("activo");
-  mostrarPreguntas();
-}
+async function cargarPublicaciones(){
 
-function escapar(texto) {
-  return String(texto ?? "").replace(/[&<>"']/g, c => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#039;"
-  })[c]);
-}
 
-function mostrarPreguntas() {
-  const contenedor = document.getElementById("preguntas");
-  const busqueda = document.getElementById("buscarPregunta")
-    .value.toLowerCase().trim();
+    const contenedor =
+    document.getElementById(
+        "publicaciones"
+    );
 
-  const resultado = preguntasGuardadas.filter(p => {
-    const categoriaOK =
-      categoriaActiva === "Todas" ||
-      p.categoria === categoriaActiva;
 
-    const textoOK =
-      (p.titulo || "").toLowerCase().includes(busqueda) ||
-      (p.contenido || "").toLowerCase().includes(busqueda);
-
-    return categoriaOK && textoOK;
-  });
-
-  if (!resultado.length) {
     contenedor.innerHTML =
-      '<div class="foro-vacio">Todavía no hay preguntas.</div>';
-    return;
-  }
+    '<div class="estado">⏳ Cargando publicaciones...</div>';
 
-  contenedor.innerHTML = resultado.map(p => `
-    <article class="pregunta-publicada">
-      <div class="pregunta-meta">
-        <span class="pregunta-categoria">
-          ${escapar(p.categoria)}
-        </span>
-        <span>
-          ${p.created_at
-            ? escapar(new Date(p.created_at).toLocaleString("es-AR"))
-            : ""}
-        </span>
-      </div>
 
-      <h3>${escapar(p.titulo)}</h3>
-      <p>${escapar(p.contenido)}</p>
-    </article>
-  `).join("");
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("publicaciones")
+        .select("*")
+        .order(
+            "created_at",
+            {
+                ascending:false
+            }
+        )
+        .limit(100);
+
+
+    if(error){
+
+        console.error(
+            "Error publicaciones:",
+            error
+        );
+
+
+        contenedor.innerHTML = `
+
+            <div class="estado error">
+
+                ⚠️ No se pudieron cargar las publicaciones.
+
+                <br>
+
+                <small>${escaparHTML(error.message)}</small>
+
+            </div>
+
+        `;
+
+
+        document
+            .getElementById("contadorPublicaciones")
+            .textContent =
+            "";
+
+
+        return;
+
+    }
+
+
+    publicacionesGuardadas =
+    data || [];
+
+
+    await cargarAutores(
+        publicacionesGuardadas
+    );
+
+
+    mostrarPublicaciones();
+
 }
 
-cargarPreguntas();
-</script>
-<!-- FIN DEL FORO DE PREGUNTAS -->
 
+/* =====================================================
+   CARGAR AUTORES
+===================================================== */
+
+async function cargarAutores(publicaciones){
+
+
+    perfilesPorId =
+    new Map();
+
+
+    const ids =
+    [
+        ...new Set(
+            publicaciones
+                .map(p => p.user_id)
+                .filter(Boolean)
+        )
+    ];
+
+
+    if(!ids.length){
+
+        return;
+
+    }
+
+
+    const {
+        data,
+        error
+    } =
+    await supabaseClient
+        .from("profiles")
+        .select(
+            "id,username,nombre,apellido,avatar_url"
+        )
+        .in(
+            "id",
+            ids
+        );
+
+
+    if(error){
+
+        console.warn(
+            "No se pudieron cargar los autores:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    (data || []).forEach(
+        perfil => {
+
+            perfilesPorId.set(
+                perfil.id,
+                perfil
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   CREAR PUBLICACIÓN
+===================================================== */
+
+async function crearPublicacion(event){
+
+
+    event.preventDefault();
+
+
+    if(!usuarioActual){
+
+        window.location.href =
+        "login.html";
+
+        return;
+
+    }
+
+
+    const categoria =
+    document
+        .getElementById("categoria")
+        .value;
+
+
+    const titulo =
+    document
+        .getElementById("tituloPublicacion")
+        .value
+        .trim();
+
+
+    const contenido =
+    document
+        .getElementById("contenidoPublicacion")
+        .value
+        .trim();
+
+
+    if(!titulo){
+
+        mostrarMensaje(
+            "❌ Escribí un título.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    if(!contenido){
+
+        mostrarMensaje(
+            "❌ Escribí el contenido.",
+            "error"
+        );
+
+        return;
+
+    }
+
+
+    const boton =
+    document.getElementById("btnPublicar");
+
+
+    boton.disabled =
+    true;
+
+    boton.textContent =
+    "⏳ Publicando...";
+
+
+    mostrarMensaje(
+        "",
+        ""
+    );
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+        .from("publicaciones")
+        .insert({
+
+            user_id:
+            usuarioActual.id,
+
+            titulo:
+            titulo,
+
+            contenido:
+            contenido,
+
+            categoria:
+            categoria
+
+        });
+
+
+    if(error){
+
+        console.error(
+            "Error creando publicación:",
+            error
+        );
+
+
+        mostrarMensaje(
+            "❌ No se pudo publicar: " +
+            error.message,
+            "error"
+        );
+
+
+        boton.disabled =
+        false;
+
+        boton.textContent =
+        "🚀 Publicar";
+
+
+        return;
+
+    }
+
+
+    document
+        .getElementById("tituloPublicacion")
+        .value = "";
+
+
+    document
+        .getElementById("contenidoPublicacion")
+        .value = "";
+
+
+    mostrarMensaje(
+        "✅ ¡Publicación creada con éxito!",
+        "exito"
+    );
+
+
+    boton.disabled =
+    false;
+
+    boton.textContent =
+    "🚀 Publicar";
+
+
+    await cargarPublicaciones();
+
+}
+
+
+/* =====================================================
+   MOSTRAR PUBLICACIONES
+===================================================== */
+
+function mostrarPublicaciones(){
+
+
+    const contenedor =
+    document.getElementById("publicaciones");
+
+
+    const busqueda =
+    document
+        .getElementById("buscarPublicacion")
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const resultado =
+    publicacionesGuardadas.filter(
+        publicacion => {
+
+
+            const categoriaOK =
+                categoriaActiva === "Todas" ||
+                publicacion.categoria === categoriaActiva;
+
+
+            const titulo =
+                String(publicacion.titulo || "")
+                    .toLowerCase();
+
+            const contenido =
+                String(publicacion.contenido || "")
+                    .toLowerCase();
+
+
+            const textoOK =
+                !busqueda ||
+                titulo.includes(busqueda) ||
+                contenido.includes(busqueda);
+
+
+            return categoriaOK && textoOK;
+
+        }
+    );
+
+
+    actualizarContador(
+        resultado.length
+    );
+
+
+    if(!resultado.length){
+
+        const hayFiltros =
+            categoriaActiva !== "Todas" ||
+            busqueda !== "";
+
+
+        contenedor.innerHTML = `
+
+            <div class="estado">
+
+                ${
+                    hayFiltros
+                    ? "🔎 No se encontraron publicaciones con esos filtros."
+                    : "🚀 Todavía no hay publicaciones. ¡Sé el primero en publicar!"
+                }
+
+            </div>
+
+        `;
+
+
+        return;
+
+    }
+
+
+    contenedor.innerHTML =
+    resultado
+        .map(
+            publicacion =>
+            crearTarjeta(publicacion)
+        )
+        .join("");
+
+}
+
+
+/* =====================================================
+   TARJETA DE PUBLICACIÓN
+===================================================== */
+
+function crearTarjeta(publicacion){
+
+
+    const perfil =
+    perfilesPorId.get(
+        publicacion.user_id
+    );
+
+
+    const nombreAutor =
+        perfil?.username ||
+        [
+            perfil?.nombre,
+            perfil?.apellido
+        ]
+            .filter(Boolean)
+            .join(" ") ||
+        "Usuario de la comunidad";
+
+
+    const inicial =
+    String(nombreAutor)
+        .charAt(0)
+        .toUpperCase();
+
+
+    const avatar =
+    perfil?.avatar_url
+
+        ? `<img
+                class="avatar"
+                src="${escaparHTML(perfil.avatar_url)}"
+                alt="Foto de ${escaparHTML(nombreAutor)}"
+            >`
+
+        : `<div class="avatar-inicial">${escaparHTML(inicial)}</div>`;
+
+
+    const categoria =
+        publicacion.categoria ||
+        "General";
+
+
+    const iconoCategoria =
+    obtenerIconoCategoria(
+        categoria
+    );
+
+
+    const fecha =
+    formatearFecha(
+        publicacion.created_at
+    );
+
+
+    return `
+
+        <article class="publicacion">
+
+            <div class="publicacion-autor">
+
+                ${avatar}
+
+                <div class="autor-datos">
+
+                    <strong>${escaparHTML(nombreAutor)}</strong>
+
+                    <span>Miembro de la comunidad</span>
+
+                </div>
+
+            </div>
+
+
+            <h3>${escaparHTML(publicacion.titulo || "Sin título")}</h3>
+
+            <p class="publicacion-texto">${escaparHTML(publicacion.contenido || "")}</p>
+
+
+            <div class="meta">
+
+                <span class="badge">
+                    ${iconoCategoria} ${escaparHTML(categoria)}
+                </span>
+
+                ${
+                    fecha
+                    ? `<span>🕒 ${escaparHTML(fecha)}</span>`
+                    : ""
+                }
+
+            </div>
+
+        </article>
+
+    `;
+
+}
+
+
+/* =====================================================
+   FILTROS
+===================================================== */
+
+function filtrar(categoria, boton){
+
+
+    categoriaActiva =
+    categoria;
+
+
+    document
+        .querySelectorAll(".filtros button")
+        .forEach(
+            b => b.classList.remove("activo")
+        );
+
+
+    boton.classList.add("activo");
+
+
+    mostrarPublicaciones();
+
+}
+
+
+/* =====================================================
+   UTILIDADES
+===================================================== */
+
+function actualizarContador(cantidad){
+
+
+    const contador =
+    document.getElementById(
+        "contadorPublicaciones"
+    );
+
+
+    contador.textContent =
+        cantidad === 1
+        ? "1 publicación"
+        : `${cantidad} publicaciones`;
+
+}
+
+
+function obtenerIconoCategoria(categoria){
+
+
+    const iconos = {
+
+        "Arduino": "🔵",
+        "ESP32": "🟣",
+        "Robótica": "🤖",
+        "Raspberry Pi": "🍓"
+
+    };
+
+
+    return iconos[categoria] || "📚";
+
+}
+
+
+function formatearFecha(fecha){
+
+
+    if(!fecha){
+
+        return "";
+
+    }
+
+
+    const fechaObjeto =
+    new Date(fecha);
+
+
+    if(Number.isNaN(fechaObjeto.getTime())){
+
+        return "";
+
+    }
+
+
+    return fechaObjeto.toLocaleString(
+        "es-AR",
+        {
+            dateStyle:"medium",
+            timeStyle:"short"
+        }
+    );
+
+}
+
+
+function escaparHTML(texto){
+
+
+    return String(texto ?? "")
+        .replace(
+            /[&<>"']/g,
+            caracter => ({
+
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#039;"
+
+            })[caracter]
+        );
+
+}
+
+
+function mostrarMensaje(texto, tipo){
+
+
+    const mensaje =
+    document.getElementById("mensaje");
+
+
+    mensaje.textContent =
+    texto;
+
+
+    mensaje.className =
+    "mensaje" + (tipo ? ` ${tipo}` : "");
+
+}
+
+
+function mostrarErrorCarga(texto){
+
+
+    const cargando =
+    document.getElementById("cargando");
+
+
+    cargando.textContent =
+    texto;
+
+}
+
+
+/* =====================================================
+   CERRAR SESIÓN
+===================================================== */
+
+async function cerrarSesion(){
+
+
+    if(!supabaseClient){
+
+        return;
+
+    }
+
+
+    const {
+        error
+    } =
+    await supabaseClient
+        .auth
+        .signOut();
+
+
+    if(error){
+
+        console.error(
+            "Error cerrando sesión:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    window.location.href =
+    "login.html";
+
+}
+
+</script>
+
+</body>
+
+</html>
