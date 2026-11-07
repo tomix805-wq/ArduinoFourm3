@@ -1,44 +1,305 @@
-<div class="card">
 
-<h2>Crear pregunta</h2>
+<!-- FORO DE PREGUNTAS -->
+<section class="foro">
 
+  <div class="foro-encabezado">
+    <span>⚡ COMUNIDAD ARDUINO</span>
+    <h2>Foro de preguntas</h2>
+    <p>Compartí tus dudas, proyectos y conocimientos.</p>
+  </div>
 
-<input 
-id="tituloPregunta"
-placeholder="Título de la pregunta">
+  <div class="foro-card">
+    <h3>✏️ Crear pregunta</h3>
 
+    <input
+      id="tituloPregunta"
+      type="text"
+      placeholder="Título de la pregunta"
+      maxlength="120">
 
-<textarea
-id="contenidoPregunta"
-placeholder="Describe tu problema">
-</textarea>
+    <textarea
+      id="contenidoPregunta"
+      placeholder="Describe tu problema o proyecto..."
+      rows="5"></textarea>
 
+    <select id="categoria">
+      <option value="Arduino">Arduino</option>
+      <option value="ESP32">ESP32</option>
+      <option value="Robótica">Robótica</option>
+    </select>
 
-<select id="categoria">
+    <button id="btnPublicar" onclick="publicarPregunta()">
+      Publicar pregunta →
+    </button>
+  </div>
 
-<option value="1">
-Arduino
-</option>
+  <div class="foro-explorar">
+    <h3>🌎 Explorar preguntas</h3>
 
-<option value="2">
-ESP32
-</option>
+    <input
+      id="buscarPregunta"
+      type="search"
+      placeholder="🔎 Buscar una pregunta..."
+      oninput="mostrarPreguntas()">
 
-<option value="3">
-Robótica
-</option>
+    <div class="foro-filtros">
+      <button class="activo" onclick="filtrar('Todas',this)">Todas</button>
+      <button onclick="filtrar('Arduino',this)">Arduino</button>
+      <button onclick="filtrar('ESP32',this)">ESP32</button>
+      <button onclick="filtrar('Robótica',this)">Robótica</button>
+    </div>
 
-</select>
+    <div id="preguntas">
+      <p>Cargando preguntas...</p>
+    </div>
+  </div>
 
+</section>
 
-<button onclick="publicarPregunta()">
+<style>
+.foro {
+  max-width: 900px;
+  margin: 35px auto;
+  padding: 20px;
+}
 
-Publicar
+.foro-encabezado {
+  margin-bottom: 25px;
+}
 
-</button>
+.foro-encabezado span {
+  color: #927bff;
+  font-size: 12px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
 
+.foro-encabezado h2 {
+  font-size: 30px;
+  margin: 10px 0;
+}
 
-</div>
+.foro-encabezado p {
+  opacity: .7;
+}
 
+.foro-card,
+.pregunta-publicada {
+  background: #171d30;
+  border: 1px solid #303954;
+  border-radius: 16px;
+  padding: 22px;
+  margin-bottom: 22px;
+}
 
-<div id="preguntas"></div>
+.foro-card input,
+.foro-card textarea,
+.foro-card select,
+.foro-explorar input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px;
+  margin: 10px 0;
+  border: 1px solid #38435f;
+  border-radius: 9px;
+  background: #101629;
+  color: white;
+  font: inherit;
+}
+
+.foro-card button {
+  width: 100%;
+  padding: 14px;
+  background: #795bff;
+  color: white;
+  border: 0;
+  border-radius: 9px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.foro-card button:disabled {
+  opacity: .6;
+}
+
+.foro-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 15px 0;
+}
+
+.foro-filtros button {
+  padding: 9px 15px;
+  background: #171d30;
+  border: 1px solid #38435f;
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.foro-filtros button.activo {
+  background: #795bff;
+}
+
+.pregunta-publicada h3 {
+  margin: 15px 0 8px;
+}
+
+.pregunta-publicada p {
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+
+.pregunta-meta {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 12px;
+  opacity: .7;
+}
+
+.pregunta-categoria {
+  color: #c6baff;
+  background: #30275b;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.foro-vacio {
+  padding: 25px;
+  text-align: center;
+  opacity: .7;
+}
+
+@media(max-width:600px) {
+  .foro {
+    padding: 12px;
+  }
+}
+</style>
+
+<script>
+let preguntasGuardadas = [];
+let categoriaActiva = "Todas";
+
+async function publicarPregunta() {
+  const titulo = document.getElementById("tituloPregunta").value.trim();
+  const contenido = document.getElementById("contenidoPregunta").value.trim();
+  const categoria = document.getElementById("categoria").value;
+  const boton = document.getElementById("btnPublicar");
+
+  if (!titulo || !contenido) {
+    alert("Completá todos los campos.");
+    return;
+  }
+
+  boton.disabled = true;
+  boton.textContent = "Publicando...";
+
+  try {
+    const { error } = await supabase
+      .from("preguntas")
+      .insert([{ titulo, contenido, categoria }]);
+
+    if (error) throw error;
+
+    document.getElementById("tituloPregunta").value = "";
+    document.getElementById("contenidoPregunta").value = "";
+
+    await cargarPreguntas();
+
+  } catch (error) {
+    console.error(error);
+    alert("No se pudo publicar la pregunta.");
+  } finally {
+    boton.disabled = false;
+    boton.textContent = "Publicar pregunta →";
+  }
+}
+
+async function cargarPreguntas() {
+  const { data, error } = await supabase
+    .from("preguntas")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error(error);
+    document.getElementById("preguntas").innerHTML =
+      '<div class="foro-vacio">Error al cargar las preguntas.</div>';
+    return;
+  }
+
+  preguntasGuardadas = data || [];
+  mostrarPreguntas();
+}
+
+function filtrar(categoria, boton) {
+  categoriaActiva = categoria;
+
+  document.querySelectorAll(".foro-filtros button")
+    .forEach(b => b.classList.remove("activo"));
+
+  boton.classList.add("activo");
+  mostrarPreguntas();
+}
+
+function escapar(texto) {
+  return String(texto ?? "").replace(/[&<>"']/g, c => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+  })[c]);
+}
+
+function mostrarPreguntas() {
+  const contenedor = document.getElementById("preguntas");
+  const busqueda = document.getElementById("buscarPregunta")
+    .value.toLowerCase().trim();
+
+  const resultado = preguntasGuardadas.filter(p => {
+    const categoriaOK =
+      categoriaActiva === "Todas" ||
+      p.categoria === categoriaActiva;
+
+    const textoOK =
+      (p.titulo || "").toLowerCase().includes(busqueda) ||
+      (p.contenido || "").toLowerCase().includes(busqueda);
+
+    return categoriaOK && textoOK;
+  });
+
+  if (!resultado.length) {
+    contenedor.innerHTML =
+      '<div class="foro-vacio">Todavía no hay preguntas.</div>';
+    return;
+  }
+
+  contenedor.innerHTML = resultado.map(p => `
+    <article class="pregunta-publicada">
+      <div class="pregunta-meta">
+        <span class="pregunta-categoria">
+          ${escapar(p.categoria)}
+        </span>
+        <span>
+          ${p.created_at
+            ? escapar(new Date(p.created_at).toLocaleString("es-AR"))
+            : ""}
+        </span>
+      </div>
+
+      <h3>${escapar(p.titulo)}</h3>
+      <p>${escapar(p.contenido)}</p>
+    </article>
+  `).join("");
+}
+
+cargarPreguntas();
+</script>
+<!-- FIN DEL FORO DE PREGUNTAS -->
+
